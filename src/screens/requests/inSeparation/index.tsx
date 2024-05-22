@@ -22,9 +22,15 @@ const InSeparationScreen = () => {
   return (
     <ScrollView>
       <View className="w-full flex-col pt-8 gap-y-4 mx-auto">
-        {inSeparationReq?.map((req) => {
-          return <RequestCard key={req._id} req={req} />;
-        })}
+        {inSeparationReq && inSeparationReq.length > 0 ? (
+          inSeparationReq.map((req) => {
+            return <RequestCard key={req._id} req={req} />;
+          })
+        ) : (
+          <Text className="text-center text-lg">
+            Nenhuma solicitação nesse status encontrada!
+          </Text>
+        )}
       </View>
     </ScrollView>
   );

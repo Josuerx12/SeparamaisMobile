@@ -22,9 +22,15 @@ const CollectedScreen = () => {
   return (
     <ScrollView>
       <View className="w-full flex-col mx-auto">
-        {collectedReq?.map((req) => {
-          return <RequestCard key={req._id} req={req} />;
-        })}
+        {collectedReq && collectedReq.length > 0 ? (
+          collectedReq.map((req) => {
+            return <RequestCard key={req._id} req={req} />;
+          })
+        ) : (
+          <Text className="text-center text-lg">
+            Nenhuma solicitação nesse status encontrada!
+          </Text>
+        )}
       </View>
     </ScrollView>
   );

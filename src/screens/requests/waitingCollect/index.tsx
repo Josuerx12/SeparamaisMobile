@@ -22,9 +22,15 @@ const WaitingCollectRequestScreen = () => {
   return (
     <ScrollView>
       <View className="w-full flex-col pt-8 gap-y-4 mx-auto">
-        {waitingToCollectReq?.map((req) => {
-          return <RequestCard key={req._id} req={req} />;
-        })}
+        {waitingToCollectReq && waitingToCollectReq.length > 0 ? (
+          waitingToCollectReq.map((req) => {
+            return <RequestCard key={req._id} req={req} />;
+          })
+        ) : (
+          <Text className="text-center text-lg">
+            Nenhuma solicitação nesse status encontrada!
+          </Text>
+        )}
       </View>
     </ScrollView>
   );
