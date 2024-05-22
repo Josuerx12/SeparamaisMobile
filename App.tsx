@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import Router from "./src/routes/Router";
+import { AuthContextProvier } from "./src/contexts/AuthContext";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App() {
+  const client = new QueryClient();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <QueryClientProvider client={client}>
+      <AuthContextProvier>
+        <StatusBar style="auto" />
+        <Router />
+      </AuthContextProvier>
+    </QueryClientProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
