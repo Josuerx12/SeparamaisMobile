@@ -1,11 +1,32 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import React, { useCallback } from "react";
+import { useFilterReq } from "../../../hooks/useFilterRequests";
+import { useQuery, useQueryClient } from "react-query";
+import { useRequests } from "../../../hooks/useRequests";
+import { useFocusEffect } from "@react-navigation/native";
+import RequestCard from "../../../components/cards/requestCard";
 
 const WaitingCollectRequestScreen = () => {
+  const { fetchUserRequests } = useRequests();
+
+  const { data, isLoading } = useQuery(["userRequests"], fetchUserRequests);
+
+  const { waitingToCollectReq } = useFilterReq(data);
+
+  const query = useQueryClient();
+  useFocusEffect(
+    useCallback(() => {
+      query.invalidateQueries("userRequests");
+    }, [query])
+  );
   return (
-    <View>
-      <Text>WaitingCollectRequestScreen</Text>
-    </View>
+    <ScrollView>
+      <View className="w-full flex-col pt-8 gap-y-4 mx-auto">
+        {waitingToCollectReq?.map((req) => {
+          return <RequestCard key={req._id} req={req} />;
+        })}
+      </View>
+    </ScrollView>
   );
 };
 

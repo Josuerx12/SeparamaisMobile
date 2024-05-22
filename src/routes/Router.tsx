@@ -4,6 +4,7 @@ import AuthRoutes from "./AuthRoutes";
 import { useAuth } from "../contexts/AuthContext";
 import AuthorizedRoutes from "./AuthorizedRoutes";
 import LoadingScreen from "../screens/loadingScreen";
+import RequestDetailsStackRoute from "./requester/RequesterStackRoutes";
 
 const Router = () => {
   const { user, loading } = useAuth();
@@ -12,7 +13,7 @@ const Router = () => {
   }
   return (
     <NavigationContainer>
-      {!user ? <AuthRoutes /> : <AuthorizedRoutes />}
+      {!user ? <AuthRoutes /> : <RequestDetailsStackRoute />}
     </NavigationContainer>
   );
 };

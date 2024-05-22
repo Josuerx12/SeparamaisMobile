@@ -1,9 +1,9 @@
 import React from "react";
-import RequestsScreen from "../screens/requests/new";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useAuth } from "../contexts/AuthContext";
 import { FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import RequesterRoutes from "./requester/RequesterRoutes";
+import AlmoxScreen from "../screens/almox";
 
 const AuthorizedRoutes = () => {
   const Tabs = createBottomTabNavigator();
@@ -25,7 +25,7 @@ const AuthorizedRoutes = () => {
       />
       <Tabs.Screen
         name="billings"
-        component={RequestsScreen}
+        component={AlmoxScreen}
         options={{
           tabBarLabel: "Compras",
           headerTitleAlign: "center",
@@ -39,7 +39,7 @@ const AuthorizedRoutes = () => {
       {user?.almox && (
         <Tabs.Screen
           name="almox"
-          component={RequestsScreen}
+          component={AlmoxScreen}
           options={{
             tabBarLabel: "Alomoxarifado",
             headerTitleAlign: "center",
@@ -52,7 +52,7 @@ const AuthorizedRoutes = () => {
       {user?.admin && (
         <Tabs.Screen
           name="admin"
-          component={RequestsScreen}
+          component={AlmoxScreen}
           options={{
             tabBarLabel: "Administração",
             headerTitleAlign: "center",
@@ -64,7 +64,7 @@ const AuthorizedRoutes = () => {
       )}
       <Tabs.Screen
         name="settings"
-        component={RequestsScreen}
+        component={AlmoxScreen}
         options={{
           tabBarLabel: "Configurações",
           headerTitleAlign: "center",
