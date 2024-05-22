@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { useFilterReq } from "../../../hooks/useFilterRequests";
 import { useRequests } from "../../../hooks/useRequests";
 import RequestCard from "../../../components/cards/requestCard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CollectedScreen = () => {
   const { fetchUserRequests } = useRequests();
@@ -20,19 +21,21 @@ const CollectedScreen = () => {
     }, [query])
   );
   return (
-    <ScrollView>
-      <View className="w-full flex-col mx-auto">
-        {collectedReq && collectedReq.length > 0 ? (
-          collectedReq.map((req) => {
-            return <RequestCard key={req._id} req={req} />;
-          })
-        ) : (
-          <Text className="text-center text-lg">
-            Nenhuma solicitação nesse status encontrada!
-          </Text>
-        )}
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View className="w-full flex-col mx-auto">
+          {collectedReq && collectedReq.length > 0 ? (
+            collectedReq.map((req) => {
+              return <RequestCard key={req._id} req={req} />;
+            })
+          ) : (
+            <Text className="text-center text-lg">
+              Nenhuma solicitação nesse status encontrada!
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -8,7 +8,7 @@ const RequestCard = ({ req }: { req: IRequest }) => {
   return (
     <View
       key={req._id}
-      className="w-11/12 my-3 mx-auto rounded-md bg-black/10 p-2"
+      className="w-11/12 mb-5 mx-auto rounded-md bg-black/10 p-2"
     >
       <Text className="capitalize text-center text-blue-500 font-bold text-lg">
         {req.status}
