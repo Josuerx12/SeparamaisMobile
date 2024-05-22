@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const RequestsScreen = () => {
+const CollectedScreen = () => {
   return (
     <View>
-      <Text>RequestsScreen</Text>
+      <Text>CollectedScreen</Text>
     </View>
   );
 };
 
-export default RequestsScreen;
+export default CollectedScreen;
