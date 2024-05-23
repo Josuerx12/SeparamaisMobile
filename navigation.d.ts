@@ -4,6 +4,7 @@ export declare global {
       requestDetails: {
         request: IRequest;
       };
+      editUser;
     }
   }
 }

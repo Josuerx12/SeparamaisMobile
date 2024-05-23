@@ -5,13 +5,28 @@ import RequesterRoutes from "./requester/RequesterRoutes";
 import { useAuth } from "../contexts/AuthContext";
 import AlmoxScreen from "../screens/almox";
 import SettingsScreen from "../screens/settings";
+import CreateRequestScreen from "../screens/requests/createRequest";
 
 const AuthorizedTabRoutes = () => {
   const Tabs = createBottomTabNavigator();
   const { user } = useAuth();
 
   return (
-    <Tabs.Navigator screenOptions={{ headerShown: false }}>
+    <Tabs.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="requests"
+    >
+      <Tabs.Screen
+        name="newRequest"
+        component={CreateRequestScreen}
+        options={{
+          headerTitleAlign: "center",
+          tabBarLabel: "Nova Solicitção",
+          tabBarIcon: ({ color, size }) => {
+            return <FontAwesome name="plus-circle" size={size} color={color} />;
+          },
+        }}
+      />
       <Tabs.Screen
         name="requests"
         component={RequesterRoutes}

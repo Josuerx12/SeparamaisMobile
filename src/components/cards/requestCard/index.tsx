@@ -18,12 +18,21 @@ const RequestCard = ({ req }: { req: IRequest }) => {
         <Text className="font-bold">
           ID de Saída: <Text className="font-normal">{req.exitID}</Text>
         </Text>
-        <Text className="font-bold">
-          Previsão de Coleta:{" "}
-          <Text className="font-normal">
-            {new Date(req.collectForecast).toLocaleString("pt-BR")}
+        {req.collectedAt ? (
+          <Text className="font-bold">
+            Coleta realizada:{" "}
+            <Text className="font-normal">
+              {new Date(req.collectedAt).toLocaleString("pt-BR")}
+            </Text>
           </Text>
-        </Text>
+        ) : (
+          <Text className="font-bold">
+            Previsão de Coleta:{" "}
+            <Text className="font-normal">
+              {new Date(req.collectForecast).toLocaleString("pt-BR")}
+            </Text>
+          </Text>
+        )}
         <Text className="font-bold">
           Descrição: <Text className="font-normal">{req.desc}</Text>
         </Text>
