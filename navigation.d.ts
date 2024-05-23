@@ -5,6 +5,7 @@ export declare global {
         request: IRequest;
       };
       editUser;
+      requests;
     }
   }
 }

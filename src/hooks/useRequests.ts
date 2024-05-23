@@ -24,7 +24,16 @@ export const useRequests = () => {
 
   async function newReq(credentials: TNewReqCredentials) {
     try {
-      const res = await api.post("/requests/new", credentials);
+      const newCredentials = {
+        exitID: credentials.exitID,
+        collectorPhone: credentials.collectorPhone,
+        collectForecast: credentials.collectForecast
+          .toISOString()
+          .split("T")[0],
+        desc: credentials.desc,
+      };
+
+      const res = await api.post("/requests/new", newCredentials);
       return res.data;
     } catch (error: any) {
       throw error.response.data.errors;
