@@ -76,6 +76,7 @@ const CreateRequestScreen = () => {
             <Text className="mb-4">ID de Saída </Text>
 
             <TextInput
+              value={String(credentials.exitID)}
               onChangeText={(text) =>
                 setCredentials((prev) => ({ ...prev, exitID: Number(text) }))
               }
@@ -100,6 +101,7 @@ const CreateRequestScreen = () => {
             <Text className="mb-4">Telefone do coletor </Text>
             <TextInput
               keyboardType="numeric"
+              value={credentials.collectorPhone}
               onChangeText={(text) =>
                 setCredentials((prev) => ({ ...prev, collectorPhone: text }))
               }
@@ -157,6 +159,7 @@ const CreateRequestScreen = () => {
           <View className="my-4">
             <Text className="mb-4">Descrição: </Text>
             <TextInput
+              value={credentials.desc}
               onChangeText={(text) =>
                 setCredentials((prev) => ({ ...prev, desc: text }))
               }
