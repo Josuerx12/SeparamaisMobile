@@ -11,7 +11,7 @@ const RequesterRoutes = () => {
   return (
     <Tab.Navigator
       screenOptions={{ animationEnabled: true, tabBarScrollEnabled: true }}
-      style={{ marginTop: 40, overflow: "scroll" }}
+      style={{ marginTop: 30 }}
     >
       <Tab.Screen
         name="new"

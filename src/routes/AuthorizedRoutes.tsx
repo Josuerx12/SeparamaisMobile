@@ -4,6 +4,7 @@ import AuthorizedTabRoutes from "./AuthorizedTabRoutes";
 import RequestDetails from "../screens/requests/detail";
 import EditUserScreen from "../screens/settings/editUser";
 import { useAuth } from "../contexts/AuthContext";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator();
 

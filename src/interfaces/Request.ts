@@ -30,7 +30,7 @@ export interface IRequest {
 }
 
 export type TNewReqCredentials = {
-  exitID?: number;
+  exitID?: number | string;
   collectorPhone?: string;
   collectForecast: Date;
   desc?: string;

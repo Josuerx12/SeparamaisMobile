@@ -19,10 +19,10 @@ type MutationError = {
 const CreateRequestScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [credentials, setCredentials] = useState<TNewReqCredentials>({
-    exitID: undefined,
-    collectorPhone: undefined,
+    exitID: "",
+    collectorPhone: "",
     collectForecast: new Date(),
-    desc: undefined,
+    desc: "",
   });
   const { navigate } = useNavigation();
 
@@ -44,10 +44,10 @@ const CreateRequestScreen = () => {
 
   function cleanTypedCredentials() {
     setCredentials({
-      exitID: undefined,
-      collectorPhone: undefined,
+      exitID: "",
+      collectorPhone: "",
       collectForecast: new Date(),
-      desc: undefined,
+      desc: "",
     });
     reset();
   }
@@ -59,12 +59,12 @@ const CreateRequestScreen = () => {
   return (
     <KeyboardAwareScrollView className="flex flex-col gap-y-5">
       <SafeAreaView>
-        <View>
+        <View className="mt-4">
           <Text className="text-2xl font-semibold text-center text-black/60">
             Nova solicitação
           </Text>
         </View>
-        <View className="w-11/12 mx-auto rounded-lg p-4 bg-black/10 border mt-5">
+        <View className="w-11/12 mx-auto rounded-lg p-4 bg-black/10 border my-5">
           {(credentials.exitID ||
             credentials.collectorPhone ||
             credentials.desc) && (
@@ -122,7 +122,7 @@ const CreateRequestScreen = () => {
             )}
           </View>
           <View>
-            <Text>Selecione uma data prevista de coleta</Text>
+            <Text>Data prevista de coleta</Text>
             <TextInput
               editable={false}
               value={new Date(credentials.collectForecast).toLocaleDateString(
@@ -141,10 +141,13 @@ const CreateRequestScreen = () => {
                 </Text>
               </View>
             )}
-            <Button
-              title="Selecionar"
-              onPress={() => setIsVisible((prev) => !prev)}
-            />
+            <TouchableOpacity onPress={() => setIsVisible((prev) => !prev)}>
+              <View className="bg-neutral-400 w-44 rounded-full shadow shadow-black mt-2 mx-auto p-2">
+                <Text className="text-center text-white">
+                  Selecionar Data de Coleta
+                </Text>
+              </View>
+            </TouchableOpacity>
             <DateTimePicker
               date={new Date(credentials.collectForecast)}
               isVisible={isVisible}
@@ -164,7 +167,6 @@ const CreateRequestScreen = () => {
                 setCredentials((prev) => ({ ...prev, desc: text }))
               }
               multiline
-              numberOfLines={10}
               placeholder="Digite alguma descrição aqui!"
               placeholderTextColor={"#999"}
               className="bg-neutral-50 h-52 w-full  rounded-md p-2"
@@ -183,7 +185,7 @@ const CreateRequestScreen = () => {
           </View>
 
           <TouchableOpacity onPress={handleSubmit}>
-            <View className="rounded-lg flex-row justify-center items-center  h-14 bg-blue-500">
+            <View className="rounded-lg flex-row justify-center items-center  h-12 bg-blue-500">
               <Text className="text-white text-lg mr-3">
                 Solicitar Separação
               </Text>

@@ -25,7 +25,7 @@ export const useRequests = () => {
   async function newReq(credentials: TNewReqCredentials) {
     try {
       const newCredentials = {
-        exitID: credentials.exitID,
+        exitID: Number(credentials.exitID),
         collectorPhone: credentials.collectorPhone,
         collectForecast: credentials.collectForecast
           .toISOString()
