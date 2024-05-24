@@ -2,7 +2,11 @@ import { View, Text, Button, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  createIconSetFromFontello,
+} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { TNewReqCredentials } from "../../../interfaces/Request";
@@ -64,7 +68,7 @@ const CreateRequestScreen = () => {
             Nova solicitação
           </Text>
         </View>
-        <View className="w-11/12 mx-auto rounded-lg p-4 bg-black/10 border my-5">
+        <View className="w-11/12 mx-auto rounded-lg p-4 mt-5 bg-black/10 border ">
           {(credentials.exitID ||
             credentials.collectorPhone ||
             credentials.desc) && (
@@ -72,8 +76,8 @@ const CreateRequestScreen = () => {
               <Button title="Limpar dados" onPress={cleanTypedCredentials} />
             </View>
           )}
-          <View className="my-4 ">
-            <Text className="mb-4">ID de Saída </Text>
+          <View>
+            <Text className="mb-2 font-semibold">ID de Saída </Text>
 
             <TextInput
               value={String(credentials.exitID)}
@@ -98,7 +102,7 @@ const CreateRequestScreen = () => {
             )}
           </View>
           <View className="my-4 ">
-            <Text className="mb-4">Telefone do coletor </Text>
+            <Text className="mb-2 font-semibold">Telefone do coletor </Text>
             <TextInput
               keyboardType="numeric"
               value={credentials.collectorPhone}
@@ -122,7 +126,7 @@ const CreateRequestScreen = () => {
             )}
           </View>
           <View>
-            <Text>Data prevista de coleta</Text>
+            <Text className=" font-semibold">Data prevista de coleta</Text>
             <TextInput
               editable={false}
               value={new Date(credentials.collectForecast).toLocaleDateString(
@@ -142,7 +146,7 @@ const CreateRequestScreen = () => {
               </View>
             )}
             <TouchableOpacity onPress={() => setIsVisible((prev) => !prev)}>
-              <View className="bg-neutral-400 w-44 rounded-full shadow shadow-black mt-2 mx-auto p-2">
+              <View className="bg-neutral-400 border rounded-full border-black/20 shadow shadow-black mt-2 mx-auto p-2">
                 <Text className="text-center text-white">
                   Selecionar Data de Coleta
                 </Text>
@@ -160,7 +164,7 @@ const CreateRequestScreen = () => {
           </View>
 
           <View className="my-4">
-            <Text className="mb-4">Descrição: </Text>
+            <Text className="mb-2 font-semibold">Descrição: </Text>
             <TextInput
               value={credentials.desc}
               onChangeText={(text) =>
@@ -169,7 +173,8 @@ const CreateRequestScreen = () => {
               multiline
               placeholder="Digite alguma descrição aqui!"
               placeholderTextColor={"#999"}
-              className="bg-neutral-50 h-52 w-full  rounded-md p-2"
+              style={{ textAlignVertical: "top" }}
+              className="bg-neutral-50 h-36 w-full rounded-md p-2"
             />
             {error?.desc && (
               <View className="bg-red-900 rounded-md mt-3 w-full p-2">
@@ -184,12 +189,11 @@ const CreateRequestScreen = () => {
             )}
           </View>
 
-          <TouchableOpacity onPress={handleSubmit}>
-            <View className="rounded-lg flex-row justify-center items-center  h-12 bg-blue-500">
-              <Text className="text-white text-lg mr-3">
-                Solicitar Separação
+          <TouchableOpacity disabled={isLoading} onPress={handleSubmit}>
+            <View className="rounded-lg flex-row justify-center items-center p-2 bg-blue-500">
+              <Text className="text-white text-lg">
+                {isLoading ? <>Aguarde...</> : <>Solicitar Separação</>}
               </Text>
-              <FontAwesome color={"#fff"} name="plus" size={25} />
             </View>
           </TouchableOpacity>
         </View>

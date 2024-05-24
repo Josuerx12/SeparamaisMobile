@@ -10,8 +10,7 @@ const AuthRoutes = () => {
         name="signIn"
         component={SignInScreen}
         options={{
-          title: "Pagina de autenticação",
-          headerTitleAlign: "center",
+          headerShown: false,
         }}
       />
     </Stack.Navigator>
