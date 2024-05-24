@@ -29,7 +29,7 @@ const RequestCard = ({ req }: { req: IRequest }) => {
           <Text className="font-bold">
             Previsão de Coleta:{" "}
             <Text className="font-normal">
-              {new Date(req.collectForecast).toLocaleString("pt-BR")}
+              {new Date(req.collectForecast).toLocaleDateString("pt-BR")}
             </Text>
           </Text>
         )}

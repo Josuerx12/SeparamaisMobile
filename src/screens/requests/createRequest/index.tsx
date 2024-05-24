@@ -22,7 +22,7 @@ type MutationError = {
 
 const CreateRequestScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [credentials, setCredentials] = useState<TNewReqCredentials>({
+  const [credentials, setCredentials] = useState({
     exitID: "",
     collectorPhone: "",
     collectForecast: new Date(),
@@ -82,7 +82,7 @@ const CreateRequestScreen = () => {
             <TextInput
               value={String(credentials.exitID)}
               onChangeText={(text) =>
-                setCredentials((prev) => ({ ...prev, exitID: Number(text) }))
+                setCredentials((prev) => ({ ...prev, exitID: text }))
               }
               keyboardType="numeric"
               placeholder="Digite a ID de saída para separação!"

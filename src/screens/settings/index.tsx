@@ -63,17 +63,17 @@ const SettingsScreen = () => {
               </Text>
             </Text>
           </View>
-          <View className="flex-row gap-2 flex-wrap">
+          <View className="flex-row gap-2">
             <TouchableOpacity
               onPress={() => navigate("editUser")}
-              className=" bg-blue-500 p-2 rounded-md flex-grow basis-[45%] flex-row items-center justify-center gap-x-2"
+              className=" bg-blue-500 p-2 rounded-md basis-1/2 flex-grow flex-row items-center justify-center gap-x-2"
             >
               <Text className="text-lg text-white ">Alterar Dados</Text>
               <FontAwesome name="pencil" size={20} color={"#fff"} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={signOut}
-              className="bg-red-500 p-2 rounded-md flex-grow basis-[45%] flex-row items-center justify-center gap-x-2"
+              className="bg-red-500 p-2 rounded-md flex-grow basis-1/2 flex-row items-center justify-center gap-x-2"
             >
               <Text className="text-lg text-white ">Sair</Text>
               <FontAwesome name="sign-out" color="#fff" size={20} />
