@@ -4,6 +4,7 @@ import AuthorizedTabRoutes from "./AuthorizedTabRoutes";
 import RequestDetails from "../screens/requests/detail";
 import EditUserScreen from "../screens/settings/editUser";
 import { useAuth } from "../contexts/AuthContext";
+import BillingDetails from "../screens/billings/detail";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,15 @@ const AuthorizedRoutes = () => {
         component={RequestDetails}
         options={{
           presentation: "modal",
-          headerTitle: "Detalhes da Solicitação",
+          headerTitle: "Detalhes",
+        }}
+      />
+      <Stack.Screen
+        name="billingDetails"
+        component={BillingDetails}
+        options={{
+          presentation: "modal",
+          headerTitle: "Detalhes",
         }}
       />
       <Stack.Screen

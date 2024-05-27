@@ -15,7 +15,7 @@ const RequestDetails = () => {
   return (
     <View className="p-2">
       <Text className="text-center mb-3 mt-1 font-bold text-neutral-700 text-lg">
-        ID: {request.exitID}
+        ID de Saída: {request.exitID}
       </Text>
 
       <View className="flex-row gap-2 flex-wrap">

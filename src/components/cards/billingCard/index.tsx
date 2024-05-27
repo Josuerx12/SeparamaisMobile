@@ -40,7 +40,7 @@ const BillingCard = ({ billing }: { billing: IBilling }) => {
         </Text>
       </View>
       <TouchableOpacity
-        // onPress={() => navigate("requestDetails", { request: req })}
+        onPress={() => navigate("billingDetails", { billing: billing })}
         className="bg-blue-500 w-[140px] mx-auto py-1 mt-4 rounded-md"
       >
         <Text className="text-center text-lg text-white">Detalhes</Text>
