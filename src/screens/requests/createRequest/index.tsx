@@ -62,7 +62,7 @@ const CreateRequestScreen = () => {
 
   return (
     <KeyboardAwareScrollView className="flex flex-col gap-y-5">
-      <SafeAreaView>
+      <SafeAreaView className="mb-14">
         <View className="mt-4">
           <Text className="text-2xl font-semibold text-center text-black/60">
             Nova solicitação
@@ -72,15 +72,20 @@ const CreateRequestScreen = () => {
           {(credentials.exitID ||
             credentials.collectorPhone ||
             credentials.desc) && (
-            <View>
-              <Button title="Limpar dados" onPress={cleanTypedCredentials} />
-            </View>
+            <TouchableOpacity onPress={cleanTypedCredentials}>
+              <View
+                style={{ elevation: 1 }}
+                className="bg-blue-600 rounded-full shadow shadow-black w-full mb-4  mx-auto p-2"
+              >
+                <Text className="text-center text-white">Limpar dados</Text>
+              </View>
+            </TouchableOpacity>
           )}
           <View>
             <Text className="mb-2 font-semibold">ID de Saída </Text>
 
             <TextInput
-              value={String(credentials.exitID)}
+              defaultValue={String(credentials.exitID)}
               onChangeText={(text) =>
                 setCredentials((prev) => ({ ...prev, exitID: text }))
               }
@@ -105,7 +110,7 @@ const CreateRequestScreen = () => {
             <Text className="mb-2 font-semibold">Telefone do coletor </Text>
             <TextInput
               keyboardType="numeric"
-              value={credentials.collectorPhone}
+              defaultValue={credentials.collectorPhone}
               onChangeText={(text) =>
                 setCredentials((prev) => ({ ...prev, collectorPhone: text }))
               }
@@ -129,9 +134,9 @@ const CreateRequestScreen = () => {
             <Text className=" font-semibold">Data prevista de coleta</Text>
             <TextInput
               editable={false}
-              value={new Date(credentials.collectForecast).toLocaleDateString(
-                "pt-BR"
-              )}
+              defaultValue={new Date(
+                credentials.collectForecast
+              ).toLocaleDateString("pt-BR")}
               className="bg-neutral-200 h-10 w-full mt-2  rounded-md p-2"
             />
             {error?.collectForecast && (

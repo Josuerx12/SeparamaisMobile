@@ -21,7 +21,7 @@ const InSeparationScreen = () => {
   );
   return (
     <ScrollView>
-      <View className="w-full flex-col pt-8 gap-y-4 mx-auto">
+      <View className="w-full flex-col pt-8 gap-y-4 mb-14 mx-auto">
         {inSeparationReq && inSeparationReq.length > 0 ? (
           inSeparationReq.map((req) => {
             return <RequestCard key={req._id} req={req} />;

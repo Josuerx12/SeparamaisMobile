@@ -22,7 +22,7 @@ const CollectedScreen = () => {
   );
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView className="mb-14">
         <View className="w-full flex-col mx-auto">
           {collectedReq && collectedReq.length > 0 ? (
             collectedReq.map((req) => {
