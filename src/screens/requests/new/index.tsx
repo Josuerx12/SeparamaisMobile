@@ -20,8 +20,8 @@ const NewRequestScreen = () => {
   );
 
   return (
-    <ScrollView>
-      <View className="w-full flex-col pt-8 gap-y-4 mx-auto">
+    <ScrollView className="mt-4">
+      <View className="w-full flex-col  mx-auto">
         {newReq && newReq.length > 0 ? (
           newReq.map((req) => {
             return <RequestCard key={req._id} req={req} />;

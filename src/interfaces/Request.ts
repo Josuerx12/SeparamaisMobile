@@ -1,4 +1,4 @@
-type ActionBy = {
+export type ActionBy = {
   id?: string;
   name?: string;
   login?: string;

@@ -21,21 +21,19 @@ const CollectedScreen = () => {
     }, [query])
   );
   return (
-    <SafeAreaView>
-      <ScrollView className="mb-14">
-        <View className="w-full flex-col mx-auto">
-          {collectedReq && collectedReq.length > 0 ? (
-            collectedReq.map((req) => {
-              return <RequestCard key={req._id} req={req} />;
-            })
-          ) : (
-            <Text className="text-center text-lg">
-              Nenhuma solicitação nesse status encontrada!
-            </Text>
-          )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView className="mb-14 mt-4">
+      <View className="w-full flex-col mx-auto">
+        {collectedReq && collectedReq.length > 0 ? (
+          collectedReq.map((req) => {
+            return <RequestCard key={req._id} req={req} />;
+          })
+        ) : (
+          <Text className="text-center text-lg">
+            Nenhuma solicitação nesse status encontrada!
+          </Text>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

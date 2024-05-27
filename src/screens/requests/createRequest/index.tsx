@@ -61,28 +61,27 @@ const CreateRequestScreen = () => {
   }
 
   return (
-    <KeyboardAwareScrollView className="flex flex-col gap-y-5">
+    <KeyboardAwareScrollView className="flex flex-col">
       <SafeAreaView className="mb-14">
         <View className="mt-4">
           <Text className="text-2xl font-semibold text-center text-black/60">
             Nova solicitação
           </Text>
         </View>
-        <View className="w-11/12 mx-auto rounded-lg p-4 mt-5 bg-black/10 border ">
+        <View className="w-11/12 mx-auto rounded-lg p-4 mt-5 bg-black/10 ">
           {(credentials.exitID ||
             credentials.collectorPhone ||
             credentials.desc) && (
             <TouchableOpacity onPress={cleanTypedCredentials}>
-              <View
-                style={{ elevation: 1 }}
-                className="bg-blue-600 rounded-full shadow shadow-black w-full mb-4  mx-auto p-2"
-              >
+              <View className="bg-blue-600 rounded-full shadow shadow-black w-full mb-4  mx-auto p-2">
                 <Text className="text-center text-white">Limpar dados</Text>
               </View>
             </TouchableOpacity>
           )}
           <View>
-            <Text className="mb-2 font-semibold">ID de Saída </Text>
+            <Text className="mb-2 font-semibold text-neutral-700">
+              ID de Saída{" "}
+            </Text>
 
             <TextInput
               defaultValue={String(credentials.exitID)}
@@ -107,7 +106,9 @@ const CreateRequestScreen = () => {
             )}
           </View>
           <View className="my-4 ">
-            <Text className="mb-2 font-semibold">Telefone do coletor </Text>
+            <Text className="mb-2 font-semibold text-neutral-700">
+              Telefone do coletor{" "}
+            </Text>
             <TextInput
               keyboardType="numeric"
               defaultValue={credentials.collectorPhone}
@@ -131,7 +132,9 @@ const CreateRequestScreen = () => {
             )}
           </View>
           <View>
-            <Text className=" font-semibold">Data prevista de coleta</Text>
+            <Text className=" font-semibold text-neutral-700">
+              Data prevista de coleta
+            </Text>
             <TextInput
               editable={false}
               defaultValue={new Date(
@@ -151,7 +154,7 @@ const CreateRequestScreen = () => {
               </View>
             )}
             <TouchableOpacity onPress={() => setIsVisible((prev) => !prev)}>
-              <View className="bg-neutral-400 border rounded-full border-black/20 shadow shadow-black mt-2 mx-auto p-2">
+              <View className="bg-neutral-500  rounded-full  shadow mt-4 mx-auto p-2">
                 <Text className="text-center text-white">
                   Selecionar Data de Coleta
                 </Text>
@@ -169,7 +172,9 @@ const CreateRequestScreen = () => {
           </View>
 
           <View className="my-4">
-            <Text className="mb-2 font-semibold">Descrição: </Text>
+            <Text className="mb-2 font-semibold text-neutral-700">
+              Descrição:{" "}
+            </Text>
             <TextInput
               value={credentials.desc}
               onChangeText={(text) =>

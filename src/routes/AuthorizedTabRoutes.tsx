@@ -6,10 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import AlmoxScreen from "../screens/almox";
 import SettingsScreen from "../screens/settings";
 import CreateRequestScreen from "../screens/requests/createRequest";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BillingsTopRoutes from "./billings/BillingsTopRoutes";
 
 const AuthorizedTabRoutes = () => {
