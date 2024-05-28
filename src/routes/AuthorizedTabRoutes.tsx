@@ -86,7 +86,7 @@ const AuthorizedTabRoutes = () => {
           },
         }}
       />
-      {user?.almox && (
+      {/* {user?.almox && (
         <Tabs.Screen
           name="almox"
           component={AlmoxScreen}
@@ -123,7 +123,7 @@ const AuthorizedTabRoutes = () => {
             },
           }}
         />
-      )}
+      )} */}
       <Tabs.Screen
         name="settings"
         component={SettingsScreen}

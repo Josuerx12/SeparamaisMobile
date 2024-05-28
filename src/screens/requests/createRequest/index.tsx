@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -213,10 +214,11 @@ const CreateRequestScreen = () => {
           </View>
 
           <TouchableOpacity disabled={isLoading} onPress={handleSubmit}>
-            <View className="rounded-lg flex-row justify-center items-center p-2 bg-blue-500">
-              <Text className="text-white text-lg">
-                {isLoading ? <>Aguarde...</> : <>Solicitar Separação</>}
+            <View className=" flex-row justify-center items-center p-2 w-full shadow shadow-black mx-auto rounded-full bg-blue-600">
+              <Text className="text-white text-lg mr-2">
+                {isLoading ? <>Solicitando</> : <>Solicitar Separação</>}
               </Text>
+              {isLoading && <ActivityIndicator size="small" color="#fff" />}
             </View>
           </TouchableOpacity>
         </View>
