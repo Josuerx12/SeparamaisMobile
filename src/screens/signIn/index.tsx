@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useMutation } from "react-query";
@@ -47,7 +54,9 @@ const SignInScreen = () => {
 
           <View>
             <View className="flex-col gap-2">
-              <Text className="text-lg">Login</Text>
+              <Text className="pl-4 text-xl font-semibold text-neutral-700 ">
+                Login
+              </Text>
               <TextInput
                 onChangeText={(text) =>
                   setCredentials((prev) => ({
@@ -59,7 +68,7 @@ const SignInScreen = () => {
                 autoCapitalize="none"
                 placeholderTextColor="#fff"
                 value={credentials.login}
-                className="bg-blue-700 text-white px-2 h-[40px] rounded"
+                className="bg-blue-500 rounded-full text-white px-4 h-[40px]"
                 placeholder="Insira seu login!"
               />
               {error && error.errors?.login && (
@@ -70,7 +79,9 @@ const SignInScreen = () => {
             </View>
 
             <View className="flex-col gap-2 mt-1">
-              <Text className="text-lg">Senha</Text>
+              <Text className="pl-4 text-xl font-semibold text-neutral-700">
+                Senha
+              </Text>
               <View className="flex flex-nowrap flex-row items-center">
                 <TextInput
                   onChangeText={(text) =>
@@ -83,11 +94,11 @@ const SignInScreen = () => {
                   autoCapitalize="none"
                   placeholderTextColor="#fff"
                   value={credentials.password}
-                  className="bg-blue-700 text-white px-2 h-[40px] rounded flex-grow mr-2"
+                  className="bg-blue-500 text-white px-4 h-[40px] rounded-full flex-grow mr-2"
                   placeholder="Insira sua senha!"
                   secureTextEntry={!showPass}
                 />
-                <View className="bg-blue-700  px-1 rounded items-center justify-center h-[40px]">
+                <View className="bg-neutral-600  px-1 rounded-full items-center justify-center h-[40px]">
                   <Ionicons
                     onPress={() => setShowPass((prev) => !prev)}
                     name={showPass ? "eye-off" : "eye"}
@@ -110,10 +121,15 @@ const SignInScreen = () => {
             )}
 
             <TouchableOpacity
-              className="bg-blue-700 mt-4 p-2 justify-center items-center rounded"
+              className="rounded mt-4 flex-row justify-center items-center"
               onPress={handleSubmit}
             >
-              <Text className="text-lg text-white font-bold">Fazer Login</Text>
+              <Text className="text-lg text-blue-500 font-bold ml-1">
+                {isLoading ? "Aguarde" : "Fazer Login"}
+              </Text>
+              {isLoading && (
+                <ActivityIndicator size={"small"} color={"rgb(59 130 246)"} />
+              )}
             </TouchableOpacity>
           </View>
         </View>

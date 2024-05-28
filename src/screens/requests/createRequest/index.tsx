@@ -1,14 +1,16 @@
-import { View, Text, Button, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  FontAwesome,
-  Ionicons,
-  createIconSetFromFontello,
-} from "@expo/vector-icons";
+import DatePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
-import DateTimePicker from "react-native-modal-datetime-picker";
 import { TNewReqCredentials } from "../../../interfaces/Request";
 import { useMutation, useQueryClient } from "react-query";
 import { useRequests } from "../../../hooks/useRequests";
@@ -63,7 +65,7 @@ const CreateRequestScreen = () => {
 
   return (
     <KeyboardAwareScrollView className="flex flex-col">
-      <SafeAreaView className="mb-14">
+      <SafeAreaView className="mb-20">
         <View className="mt-4">
           <Text className="text-2xl font-semibold text-center text-black/60">
             Nova solicitação
@@ -132,6 +134,7 @@ const CreateRequestScreen = () => {
               </View>
             )}
           </View>
+
           <View>
             <Text className=" font-semibold text-neutral-700">
               Data prevista de coleta
@@ -141,7 +144,7 @@ const CreateRequestScreen = () => {
               defaultValue={new Date(
                 credentials.collectForecast
               ).toLocaleDateString("pt-BR")}
-              className="bg-neutral-200 h-10 w-full mt-2  rounded-md p-2"
+              className="bg-neutral-200 text-black/70 h-10 w-full mt-2  rounded-md p-2"
             />
             {error?.collectForecast && (
               <View className="bg-red-900 rounded-md mt-3 w-full p-2">
@@ -161,15 +164,24 @@ const CreateRequestScreen = () => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <DateTimePicker
-              date={new Date(credentials.collectForecast)}
-              isVisible={isVisible}
-              onCancel={() => setIsVisible((prev) => !prev)}
-              onConfirm={(date) => {
-                setCredentials((prev) => ({ ...prev, collectForecast: date }));
-                setIsVisible(false);
-              }}
-            />
+            {isVisible && (
+              <DatePicker
+                testID="dateTimePicker"
+                mode="date"
+                is24Hour
+                display="default"
+                onChange={(e, selectedDate?: Date) => {
+                  setIsVisible(Platform.OS === "ios");
+                  if (selectedDate) {
+                    setCredentials((prev) => ({
+                      ...prev,
+                      collectForecast: selectedDate,
+                    }));
+                  }
+                }}
+                value={credentials.collectForecast}
+              />
+            )}
           </View>
 
           <View className="my-4">
