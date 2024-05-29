@@ -2,7 +2,7 @@
   "expo": {
     "name": "separa+",
     "slug": "separamais",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -28,7 +28,7 @@
       ]
     ],
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
@@ -42,6 +42,12 @@
       "eas": {
         "projectId": "3f2e7188-84dc-416c-940b-2c1854a63d76"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3f2e7188-84dc-416c-940b-2c1854a63d76"
     }
   }
 }
