@@ -2,7 +2,7 @@
   "expo": {
     "name": "separa+",
     "slug": "separamais",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -21,14 +21,14 @@
           "icon": "./src/assets/icon.png",
           "color": "#ffffff",
           "sounds": [
-            "./src/assets/separamaisNotificationBell.wav",
-            "./src/assets/separamaisNotificationBellOther.wav"
+            "./src/assets/separamaisnotification1.wav",
+            "./src/assets/separamaisnotification2.wav"
           ]
         }
       ]
     ],
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
