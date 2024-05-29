@@ -14,6 +14,19 @@
     "ios": {
       "supportsTablet": true
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./src/assets/separamaisNotificationBell.wav",
+            "./src/assets/separamaisNotificationBellOther.wav"
+          ]
+        }
+      ]
+    ],
     "android": {
       "versionCode": 2,
       "adaptiveIcon": {
