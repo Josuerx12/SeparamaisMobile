@@ -2,13 +2,15 @@ import {
   useState,
   createContext,
   useContext,
-  Children,
   ReactNode,
   useEffect,
 } from "react";
 import { IUser } from "../interfaces/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { api } from "../services/api";
+import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
 
 export type TSignInCredentials = {
   login: string;
@@ -24,7 +26,13 @@ type TAuthContext = {
 };
 
 const AuthContext = createContext<TAuthContext>({} as TAuthContext);
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldShowAlert: true,
+    shouldSetBadge: false,
+  }),
+});
 export const AuthContextProvier = ({
   children,
 }: {
@@ -35,12 +43,48 @@ export const AuthContextProvier = ({
 
   async function signIn(credentials: TSignInCredentials) {
     try {
-      const res = await api.post("/auth/login", credentials);
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
+
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        return;
+      }
+
+      const projectId =
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId;
+
+      const token = await Notifications.getExpoPushTokenAsync({
+        projectId,
+      });
+
+      const loginCredentials = {
+        login: credentials.login,
+        password: credentials.password,
+        expoToken: {
+          deviceId: Constants.deviceName,
+          token: token.data,
+        },
+      };
+
+      const res = await api.post("/auth/login", loginCredentials);
 
       await AsyncStorage.setItem("token", res.data.token);
 
       api.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-
       await getUser();
     } catch (error: any) {
       throw error.response.data;
@@ -51,13 +95,22 @@ export const AuthContextProvier = ({
     try {
       const res = await api.get("/auth/user");
 
+      if (!res.data) {
+        AsyncStorage.removeItem("token");
+        api.defaults.headers.common.Authorization = "";
+        setUser(null);
+      }
+
       setUser(res.data);
     } catch (error: any) {
       throw error.response.data;
     }
   }
 
-  function signOut() {
+  async function signOut() {
+    const deviceId = Constants.deviceName;
+
+    await api.post("/auth/logout", { deviceId });
     AsyncStorage.removeItem("token");
     setUser(null);
     api.defaults.headers.common.Authorization = "";
