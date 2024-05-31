@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, ScrollView } from "react-native";
+import { SafeAreaView, View, Text, ScrollView, FlatList } from "react-native";
 import RequestCard from "../../../components/cards/requestCard";
 import { useQuery, useQueryClient } from "react-query";
 import { useRequests } from "../../../hooks/useRequests";
@@ -20,19 +20,19 @@ const InSeparationScreen = () => {
     }, [query])
   );
   return (
-    <ScrollView className="mt-4">
-      <View className="w-full flex-col mb-14 mx-auto">
-        {inSeparationReq && inSeparationReq.length > 0 ? (
-          inSeparationReq.map((req) => {
-            return <RequestCard key={req._id} req={req} />;
-          })
-        ) : (
-          <Text className="text-center text-lg">
-            Nenhuma solicitação nesse status encontrada!
-          </Text>
-        )}
-      </View>
-    </ScrollView>
+    <View className="w-full flex-col mx-auto">
+      {inSeparationReq && inSeparationReq.length > 0 ? (
+        <FlatList
+          className="py-5"
+          data={inSeparationReq}
+          renderItem={({ item }) => <RequestCard req={item} key={item._id} />}
+        />
+      ) : (
+        <Text className="text-center text-lg">
+          Nenhuma solicitação nesse status encontrada!
+        </Text>
+      )}
+    </View>
   );
 };
 

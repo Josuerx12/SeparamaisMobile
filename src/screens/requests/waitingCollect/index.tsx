@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useFilterReq } from "../../../hooks/useFilterRequests";
 import { useQuery, useQueryClient } from "react-query";
@@ -20,19 +20,19 @@ const WaitingCollectRequestScreen = () => {
     }, [query])
   );
   return (
-    <ScrollView className="mt-4">
-      <View className="w-full  flex-col  mx-auto">
-        {waitingToCollectReq && waitingToCollectReq.length > 0 ? (
-          waitingToCollectReq.map((req) => {
-            return <RequestCard key={req._id} req={req} />;
-          })
-        ) : (
-          <Text className="text-center text-lg">
-            Nenhuma solicitação nesse status encontrada!
-          </Text>
-        )}
-      </View>
-    </ScrollView>
+    <View className="w-full flex-col mx-auto">
+      {waitingToCollectReq && waitingToCollectReq.length > 0 ? (
+        <FlatList
+          className="py-5"
+          data={waitingToCollectReq}
+          renderItem={({ item }) => <RequestCard req={item} key={item._id} />}
+        />
+      ) : (
+        <Text className="text-center text-lg">
+          Nenhuma solicitação nesse status encontrada!
+        </Text>
+      )}
+    </View>
   );
 };
 

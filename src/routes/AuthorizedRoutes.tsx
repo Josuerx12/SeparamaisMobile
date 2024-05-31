@@ -39,7 +39,7 @@ const AuthorizedRoutes = () => {
         component={EditUserScreen}
         options={{
           presentation: "modal",
-          headerTitle: "Editar usuário: " + user?.name,
+          headerTitle: "Editar Usuário",
         }}
       />
     </Stack.Navigator>

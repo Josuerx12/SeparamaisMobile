@@ -2,7 +2,7 @@
   "expo": {
     "name": "separa+",
     "slug": "separamais",
-    "version": "4.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -28,7 +28,8 @@
       ]
     ],
     "android": {
-      "versionCode": 4,
+      "versionCode": 3,
+      "googleServicesFile": "./src/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"

@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DatePicker from "@react-native-community/datetimepicker";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { TNewReqCredentials } from "../../../interfaces/Request";
 import { useMutation, useQueryClient } from "react-query";
@@ -23,7 +24,9 @@ type MutationError = {
 };
 
 const CreateRequestScreen = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(
+    Platform.OS === "ios" ? true : false
+  );
   const [credentials, setCredentials] = useState({
     exitID: "",
     collectorPhone: "",
@@ -136,16 +139,22 @@ const CreateRequestScreen = () => {
           </View>
 
           <View>
-            <Text className=" font-semibold text-neutral-700">
+            <Text
+              className={`${
+                Platform.OS === "ios" && "text-center"
+              } font-semibold text-neutral-700`}
+            >
               Data prevista de coleta
             </Text>
-            <TextInput
-              editable={false}
-              defaultValue={new Date(
-                credentials.collectForecast
-              ).toLocaleDateString("pt-BR")}
-              className="bg-neutral-200 text-black/70 h-10 w-full mt-2  rounded-md p-2"
-            />
+            {Platform.OS === "android" && (
+              <TextInput
+                editable={false}
+                defaultValue={new Date(
+                  credentials.collectForecast
+                ).toLocaleDateString("pt-BR")}
+                className="bg-neutral-200 text-black/70 h-10 w-full mt-2  rounded-md p-2"
+              />
+            )}
             {error?.collectForecast && (
               <View className="bg-red-900 rounded-md mt-3 w-full p-2">
                 <Text className=" text-white font-semibold">
@@ -157,30 +166,34 @@ const CreateRequestScreen = () => {
                 </Text>
               </View>
             )}
-            <TouchableOpacity onPress={() => setIsVisible((prev) => !prev)}>
-              <View className="bg-neutral-500  rounded-full  shadow mt-4 mx-auto p-2">
-                <Text className="text-center text-white">
-                  Selecionar Data de Coleta
-                </Text>
-              </View>
-            </TouchableOpacity>
+            {Platform.OS === "android" && (
+              <TouchableOpacity onPress={() => setIsVisible((prev) => !prev)}>
+                <View className="bg-neutral-500  rounded-full  shadow mt-4 mx-auto p-2">
+                  <Text className="text-center text-white">
+                    Selecionar Data de Coleta
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
             {isVisible && (
-              <DatePicker
-                testID="dateTimePicker"
-                mode="date"
-                is24Hour
-                display="default"
-                onChange={(e, selectedDate?: Date) => {
-                  setIsVisible(Platform.OS === "ios");
-                  if (selectedDate) {
-                    setCredentials((prev) => ({
-                      ...prev,
-                      collectForecast: selectedDate,
-                    }));
-                  }
-                }}
-                value={credentials.collectForecast}
-              />
+              <View className="mx-auto mt-4">
+                <DatePicker
+                  testID="dateTimePicker"
+                  mode="date"
+                  is24Hour
+                  display="default"
+                  onChange={(e, selectedDate?: Date) => {
+                    setIsVisible(Platform.OS === "ios");
+                    if (selectedDate) {
+                      setCredentials((prev) => ({
+                        ...prev,
+                        collectForecast: selectedDate,
+                      }));
+                    }
+                  }}
+                  value={credentials.collectForecast}
+                />
+              </View>
             )}
           </View>
 

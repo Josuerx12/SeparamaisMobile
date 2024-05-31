@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
@@ -21,19 +21,19 @@ const CollectedScreen = () => {
     }, [query])
   );
   return (
-    <ScrollView className="mb-14 mt-4">
-      <View className="w-full flex-col mx-auto">
-        {collectedReq && collectedReq.length > 0 ? (
-          collectedReq.map((req) => {
-            return <RequestCard key={req._id} req={req} />;
-          })
-        ) : (
-          <Text className="text-center text-lg">
-            Nenhuma solicitação nesse status encontrada!
-          </Text>
-        )}
-      </View>
-    </ScrollView>
+    <View className="w-full flex-col mx-auto">
+      {collectedReq && collectedReq.length > 0 ? (
+        <FlatList
+          className="py-5"
+          data={collectedReq}
+          renderItem={({ item }) => <RequestCard req={item} key={item._id} />}
+        />
+      ) : (
+        <Text className="text-center text-lg">
+          Nenhuma solicitação nesse status encontrada!
+        </Text>
+      )}
+    </View>
   );
 };
 

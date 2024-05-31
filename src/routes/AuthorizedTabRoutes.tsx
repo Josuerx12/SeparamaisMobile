@@ -1,6 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  FontAwesome5,
+  FontAwesome6,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import RequesterRoutes from "./requester/RequesterRoutes";
 import { useAuth } from "../contexts/AuthContext";
 import AlmoxScreen from "../screens/almox";
@@ -8,6 +14,7 @@ import SettingsScreen from "../screens/settings";
 import CreateRequestScreen from "../screens/requests/createRequest";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BillingsTopRoutes from "./billings/BillingsTopRoutes";
+import { Platform } from "react-native";
 
 const AuthorizedTabRoutes = () => {
   const Tabs = createBottomTabNavigator();
@@ -22,15 +29,20 @@ const AuthorizedTabRoutes = () => {
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#ddd",
         tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          position: "absolute",
-          bottom: insets.bottom + 14,
-          right: 10,
-          left: 10,
-          elevation: 0,
-          backgroundColor: "rgb(37 99 235)",
-          borderRadius: 50,
-        },
+        tabBarStyle:
+          Platform.OS === "android"
+            ? {
+                position: "relative",
+                marginLeft: 10,
+                marginRight: 10,
+                marginBottom: 14,
+                marginTop: 5,
+                backgroundColor: "rgb(37 99 235)",
+                borderRadius: 50,
+              }
+            : {
+                backgroundColor: "rgb(37 99 235)",
+              },
       }}
       initialRouteName="requests"
     >
@@ -40,11 +52,12 @@ const AuthorizedTabRoutes = () => {
         options={{
           headerTitleAlign: "center",
           tabBarLabel: "Nova Solicitção",
+
           tabBarIcon: ({ color, size, focused }) => {
             return (
-              <FontAwesome
-                name="plus-circle"
-                size={!focused ? size : size + 10}
+              <Ionicons
+                name={!focused ? "add-circle-outline" : "add-circle"}
+                size={size}
                 color={color}
               />
             );
@@ -59,9 +72,9 @@ const AuthorizedTabRoutes = () => {
           tabBarLabel: "Solicitações",
           tabBarIcon: ({ color, size, focused }) => {
             return (
-              <FontAwesome
-                name="tags"
-                size={!focused ? size : size + 10}
+              <MaterialCommunityIcons
+                name={!focused ? "truck-delivery-outline" : "truck-delivery"}
+                size={size}
                 color={color}
               />
             );
@@ -77,9 +90,9 @@ const AuthorizedTabRoutes = () => {
           headerTitleAlign: "center",
           tabBarIcon: ({ color, focused, size }) => {
             return (
-              <FontAwesome
-                name="shopping-bag"
-                size={!focused ? size : size + 10}
+              <Ionicons
+                name={!focused ? "bag-outline" : "bag"}
+                size={size}
                 color={color}
               />
             );
@@ -97,7 +110,7 @@ const AuthorizedTabRoutes = () => {
               return (
                 <FontAwesome
                   name="archive"
-                  size={!focused ? size : size + 10}
+                  size={size}
                   color={color}
                 />
               );
@@ -116,7 +129,7 @@ const AuthorizedTabRoutes = () => {
               return (
                 <FontAwesome
                   name="shield"
-                  size={!focused ? size : size + 10}
+                  size={size}
                   color={color}
                 />
               );
@@ -132,9 +145,9 @@ const AuthorizedTabRoutes = () => {
           headerTitleAlign: "center",
           tabBarIcon: ({ color, size, focused }) => {
             return (
-              <FontAwesome
-                name="user"
-                size={!focused ? size : size + 10}
+              <FontAwesome5
+                name={!focused ? "user" : "user-alt"}
+                size={size}
                 color={color}
               />
             );

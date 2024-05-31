@@ -22,14 +22,12 @@ const BillingCard = ({ billing }: { billing: IBilling }) => {
           <Text className="font-normal">{billing.idDeCompra}</Text>
         </Text>
 
-        <Text className="font-bold line-clamp-3">
+        <Text className="font-bold ">
           Descrição: <Text className="font-normal">{billing.message}</Text>
         </Text>
-        <Text className="font-bold line-clamp-3">
+        <Text className="font-bold ">
           Recebido por:{" "}
-          <Text className="font-normal line-clamp-1">
-            {billing.receptor.name}
-          </Text>
+          <Text className="font-normal ">{billing.receptor.name}</Text>
         </Text>
 
         <Text className="font-bold text-black/60 text-xs">

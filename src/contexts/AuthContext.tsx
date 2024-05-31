@@ -17,12 +17,28 @@ export type TSignInCredentials = {
   password: string;
 };
 
+export type TEditUserCredentials = {
+  name: string | undefined;
+  phone: string | undefined;
+  login: string | undefined;
+  email: string | undefined;
+  password: undefined | string;
+  confirmPassword: undefined | string;
+};
+
 type TAuthContext = {
   user: IUser | null;
   loading: boolean;
   signIn: (credentials: TSignInCredentials) => Promise<void>;
   signOut: () => void;
   getUser: () => Promise<void>;
+  editUser: ({
+    id,
+    newCredentials,
+  }: {
+    id: string;
+    newCredentials: TEditUserCredentials;
+  }) => Promise<void>;
 };
 
 const AuthContext = createContext<TAuthContext>({} as TAuthContext);
@@ -43,13 +59,7 @@ export const AuthContextProvier = ({
 
   async function signIn(credentials: TSignInCredentials) {
     try {
-      const projectId =
-        Constants?.expoConfig?.extra?.eas?.projectId ??
-        Constants?.easConfig?.projectId;
-
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId,
-      });
+      const token = await Notifications.getExpoPushTokenAsync();
 
       const loginCredentials = {
         login: credentials.login,
@@ -65,6 +75,22 @@ export const AuthContextProvier = ({
       await AsyncStorage.setItem("token", res.data.token);
 
       api.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
+      await getUser();
+    } catch (error: any) {
+      alert(error);
+      throw error.response.data;
+    }
+  }
+
+  async function editUser({
+    id,
+    newCredentials,
+  }: {
+    id: string;
+    newCredentials: TEditUserCredentials;
+  }) {
+    try {
+      await api.put("/auth/editUser/" + id, newCredentials);
       await getUser();
     } catch (error: any) {
       throw error.response.data;
@@ -136,7 +162,9 @@ export const AuthContextProvier = ({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, getUser, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user, loading, getUser, signIn, signOut, editUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
