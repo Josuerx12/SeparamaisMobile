@@ -11,6 +11,7 @@ import { api } from "../services/api";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export type TSignInCredentials = {
   login: string;
@@ -123,9 +124,8 @@ export const AuthContextProvier = ({
         credentials.confirmPassword = newCredentials.confirmPassword;
       }
 
-      const res = await api.put("/auth/editUser/" + id, credentials);
+      await api.put("/auth/editUser/" + id, credentials);
 
-      console.log(res.data);
       await getUser();
     } catch (error: any) {
       console.log(JSON.stringify(error));

@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { TEditUserCredentials, useAuth } from "../../../contexts/AuthContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "react-query";
+import { useNavigation } from "@react-navigation/native";
 
 const EditUserScreen = () => {
   const { user } = useAuth();
@@ -24,8 +25,14 @@ const EditUserScreen = () => {
   });
 
   const { editUser } = useAuth();
+  const { navigate } = useNavigation();
 
-  const { mutateAsync, isLoading } = useMutation(["editUser"], editUser);
+  const { mutateAsync, isLoading } = useMutation(["editUser"], editUser, {
+    onSuccess: () => {
+      alert("Usuário editado com sucesso!");
+      navigate("settings");
+    },
+  });
 
   return (
     <KeyboardAwareScrollView>
