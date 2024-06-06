@@ -90,9 +90,45 @@ export const AuthContextProvier = ({
     newCredentials: TEditUserCredentials;
   }) {
     try {
-      await api.put("/auth/editUser/" + id, newCredentials);
+      const credentials: Record<string, any> = {};
+
+      if (user && newCredentials.name && user?.name !== newCredentials.name) {
+        credentials.name = newCredentials.name;
+      }
+      if (
+        user &&
+        newCredentials.email &&
+        user?.email !== newCredentials.email
+      ) {
+        credentials.email = newCredentials.email;
+      }
+      if (
+        user &&
+        newCredentials.login &&
+        user?.login !== newCredentials.login
+      ) {
+        credentials.login = newCredentials.login;
+      }
+      if (
+        user &&
+        newCredentials.phone &&
+        user?.phone !== newCredentials.phone
+      ) {
+        credentials.phone = newCredentials.phone;
+      }
+      if (newCredentials.password) {
+        credentials.password = newCredentials.password;
+      }
+      if (newCredentials.confirmPassword) {
+        credentials.confirmPassword = newCredentials.confirmPassword;
+      }
+
+      const res = await api.put("/auth/editUser/" + id, credentials);
+
+      console.log(res.data);
       await getUser();
     } catch (error: any) {
+      console.log(JSON.stringify(error));
       throw error.response.data;
     }
   }
