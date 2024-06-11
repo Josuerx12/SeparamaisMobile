@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
+  Entypo,
   FontAwesome,
   FontAwesome5,
   FontAwesome6,
@@ -15,6 +16,7 @@ import CreateRequestScreen from "../screens/requests/createRequest";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BillingsTopRoutes from "./billings/BillingsTopRoutes";
 import { Platform } from "react-native";
+import AlmoxDrawerRoutes from "./almox/AlmoxDrawerRoutes";
 
 const AuthorizedTabRoutes = () => {
   const Tabs = createBottomTabNavigator();
@@ -29,20 +31,9 @@ const AuthorizedTabRoutes = () => {
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#ddd",
         tabBarHideOnKeyboard: true,
-        tabBarStyle:
-          Platform.OS === "android"
-            ? {
-                position: "relative",
-                marginLeft: 10,
-                marginRight: 10,
-                marginBottom: 14,
-                marginTop: 5,
-                backgroundColor: "rgb(37 99 235)",
-                borderRadius: 50,
-              }
-            : {
-                backgroundColor: "rgb(37 99 235)",
-              },
+        tabBarStyle: {
+          backgroundColor: "rgb(37 99 235)",
+        },
       }}
       initialRouteName="requests"
     >
@@ -99,17 +90,17 @@ const AuthorizedTabRoutes = () => {
           },
         }}
       />
-      {/* {user?.almox && (
+      {user?.almox && (
         <Tabs.Screen
           name="almox"
-          component={AlmoxScreen}
+          component={AlmoxDrawerRoutes}
           options={{
             tabBarLabel: "Alomoxarifado",
             headerTitleAlign: "center",
             tabBarIcon: ({ color, focused, size }) => {
               return (
-                <FontAwesome
-                  name="archive"
+                <FontAwesome5
+                  name={!focused ? "clipboard" : "clipboard-check"}
                   size={size}
                   color={color}
                 />
@@ -118,7 +109,7 @@ const AuthorizedTabRoutes = () => {
           }}
         />
       )}
-      {user?.admin && (
+      {/* {user?.admin && (
         <Tabs.Screen
           name="admin"
           component={AlmoxScreen}

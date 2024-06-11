@@ -3,6 +3,7 @@ import Router from "./src/routes/Router";
 import { AuthContextProvier } from "./src/contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Platform } from "react-native";
+import "react-native-gesture-handler";
 
 export default function App() {
   const client = new QueryClient();
