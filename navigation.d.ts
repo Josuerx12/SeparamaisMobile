@@ -12,6 +12,8 @@ export declare global {
       editUser;
       requests;
       settings;
+      filterRequests;
+      filterBillings;
     }
   }
 }

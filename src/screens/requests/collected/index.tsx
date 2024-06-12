@@ -1,11 +1,10 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
 import { useFilterReq } from "../../../hooks/useFilterRequests";
 import { useRequests } from "../../../hooks/useRequests";
 import RequestCard from "../../../components/cards/requestCard";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const CollectedScreen = () => {
   const { fetchUserRequests } = useRequests();

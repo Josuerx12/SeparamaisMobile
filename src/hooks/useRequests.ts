@@ -1,4 +1,8 @@
-import { IRequest, TNewReqCredentials } from "../interfaces/Request";
+import {
+  IPaginatedAndFilteredRequest,
+  IRequest,
+  TNewReqCredentials,
+} from "../interfaces/Request";
 import { api } from "../services/api";
 
 export const useRequests = () => {
@@ -16,6 +20,33 @@ export const useRequests = () => {
     try {
       const res = await api.get("/requests/all");
 
+      return res.data.payload;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  }
+
+  async function fetchRequestsWithFilters({
+    exitID,
+    itemsPerPage = 10,
+    page = 1,
+    startAt,
+    status,
+    endAt,
+  }: {
+    exitID?: string | number;
+    itemsPerPage: string | number;
+    page: string | number;
+    status: string;
+    startAt?: string | Date;
+    endAt?: string | Date;
+  }): Promise<IPaginatedAndFilteredRequest> {
+    try {
+      const res = await api.get(
+        `/requests/paginatedReq?status=${status}&itemsPerPage=${itemsPerPage}&page=${page}${
+          exitID && "&exitID=" + exitID
+        }${endAt && "endAt=" + endAt}${startAt && "startAt" + startAt}`.trim()
+      );
       return res.data.payload;
     } catch (error: any) {
       throw error.response.data;
@@ -78,5 +109,6 @@ export const useRequests = () => {
     requestCancelReq,
     cancelReq,
     deleteReq,
+    fetchRequestsWithFilters,
   };
 };

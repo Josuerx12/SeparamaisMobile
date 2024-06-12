@@ -29,6 +29,13 @@ export interface IRequest {
   reason?: string;
 }
 
+export interface IPaginatedAndFilteredRequest {
+  requests: IRequest[];
+  totalItems: number;
+  totalPages: number;
+  remainingPages: number;
+}
+
 export type TNewReqCredentials = {
   exitID?: number | string;
   collectorPhone?: string;
