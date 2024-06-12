@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DatePicker from "@react-native-community/datetimepicker";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { TNewReqCredentials } from "../../../interfaces/Request";
 import { useMutation, useQueryClient } from "react-query";

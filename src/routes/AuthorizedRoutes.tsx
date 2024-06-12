@@ -5,6 +5,7 @@ import RequestDetails from "../screens/requests/detail";
 import EditUserScreen from "../screens/settings/editUser";
 import { useAuth } from "../contexts/AuthContext";
 import BillingDetails from "../screens/billings/detail";
+import RequestsFilterModal from "../screens/filterModals/requestsFilter";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,14 @@ const AuthorizedRoutes = () => {
         options={{
           presentation: "modal",
           headerTitle: "Editar Usuário",
+        }}
+      />
+      <Stack.Screen
+        name="filterRequests"
+        component={RequestsFilterModal}
+        options={{
+          presentation: "modal",
+          headerTitle: "Filtrar Processos de Saída",
         }}
       />
     </Stack.Navigator>

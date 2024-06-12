@@ -2,10 +2,12 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import AlmoxRequestsManagementTopRoutes from "./AlmoxRequestsManagementTopRoutes";
 import AlmoxBillingsManagementTopRoutes from "./AlmoxBillingsManagementTopRoutes";
 import { TouchableOpacity, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
 const AlmoxDrawerRoutes = () => {
+  const navigator = useNavigation();
   return (
     <Drawer.Navigator>
       <Drawer.Screen
@@ -14,7 +16,10 @@ const AlmoxDrawerRoutes = () => {
           drawerLabel: "Processos de Separação",
           title: "Processos de Separação",
           headerRight: () => (
-            <TouchableOpacity className="mr-4">
+            <TouchableOpacity
+              onPress={() => navigator.navigate("filterRequests")}
+              className="mr-4"
+            >
               <Text className="text-blue-600">Filtrar</Text>
             </TouchableOpacity>
           ),
