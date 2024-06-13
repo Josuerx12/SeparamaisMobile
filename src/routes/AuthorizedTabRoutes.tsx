@@ -1,27 +1,20 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  Entypo,
-  FontAwesome,
   FontAwesome5,
-  FontAwesome6,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import RequesterRoutes from "./requester/RequesterRoutes";
 import { useAuth } from "../contexts/AuthContext";
-import AlmoxScreen from "../screens/almox";
 import SettingsScreen from "../screens/settings";
-import CreateRequestScreen from "../screens/requests/createRequest";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BillingsTopRoutes from "./billings/BillingsTopRoutes";
-import { Platform } from "react-native";
 import AlmoxDrawerRoutes from "./almox/AlmoxDrawerRoutes";
+import { Text, TouchableOpacity } from "react-native";
+import RequesterDrawerRoutes from "./requester/RequesterDrawerRoutes";
 
 const AuthorizedTabRoutes = () => {
   const Tabs = createBottomTabNavigator();
   const { user } = useAuth();
-  const insets = useSafeAreaInsets();
 
   return (
     <Tabs.Navigator
@@ -38,28 +31,9 @@ const AuthorizedTabRoutes = () => {
       initialRouteName="requests"
     >
       <Tabs.Screen
-        name="newRequest"
-        component={CreateRequestScreen}
-        options={{
-          headerTitleAlign: "center",
-          tabBarLabel: "Nova Solicitção",
-
-          tabBarIcon: ({ color, size, focused }) => {
-            return (
-              <Ionicons
-                name={!focused ? "add-circle-outline" : "add-circle"}
-                size={size}
-                color={color}
-              />
-            );
-          },
-        }}
-      />
-      <Tabs.Screen
         name="requests"
-        component={RequesterRoutes}
+        component={RequesterDrawerRoutes}
         options={{
-          headerTitleAlign: "center",
           tabBarLabel: "Solicitações",
           tabBarIcon: ({ color, size, focused }) => {
             return (
@@ -77,7 +51,9 @@ const AuthorizedTabRoutes = () => {
         name="billings"
         component={BillingsTopRoutes}
         options={{
+          headerShown: true,
           tabBarLabel: "Compras",
+          headerTitle: "Solicitações de Compra",
           headerTitleAlign: "center",
           tabBarIcon: ({ color, focused, size }) => {
             return (

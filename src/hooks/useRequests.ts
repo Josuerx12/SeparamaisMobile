@@ -44,8 +44,10 @@ export const useRequests = () => {
     try {
       const res = await api.get(
         `/requests/paginatedReq?status=${status}&itemsPerPage=${itemsPerPage}&page=${page}${
-          exitID && "&exitID=" + exitID
-        }${endAt && "endAt=" + endAt}${startAt && "startAt" + startAt}`.trim()
+          exitID ? "&exitID=" + exitID : ""
+        }${endAt ? "&endAt=" + endAt : ""}${
+          startAt ? "&startAt" + startAt : ""
+        }`.trim()
       );
       return res.data.payload;
     } catch (error: any) {

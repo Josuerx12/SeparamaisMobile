@@ -1,20 +1,15 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import WaitingCollectRequestScreen from "../../screens/requests/waitingCollect";
 import InQuarantineBillingsScreen from "../../screens/billings/inQuarantine";
 import CollectedBillingsScreen from "../../screens/billings/collected";
 import DeliveredToStockBillingsScreen from "../../screens/billings/deliverdToStock";
 import WaitingToCollectBillingsScreen from "../../screens/billings/waitingToCollect";
-import { getStatusBarHeight } from "react-native-status-bar-height";
 
 const BillingsTopRoutes = () => {
   const Tabs = createMaterialTopTabNavigator();
-  const statusBarHeight = getStatusBarHeight();
 
   return (
     <Tabs.Navigator
-      style={{ marginTop: statusBarHeight }}
       screenOptions={{
         tabBarScrollEnabled: true,
         tabBarLabelStyle: {

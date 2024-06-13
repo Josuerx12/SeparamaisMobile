@@ -31,6 +31,7 @@ const AlmoxRequestsManagementTopRoutes = () => {
         swipeEnabled: true,
         tabBarScrollEnabled: true,
         tabBarLabelStyle: {
+          width: 300,
           textTransform: "capitalize",
         },
       }}

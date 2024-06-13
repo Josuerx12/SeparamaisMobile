@@ -68,12 +68,7 @@ const CreateRequestScreen = () => {
   return (
     <KeyboardAwareScrollView className="flex flex-col">
       <SafeAreaView className="mb-20">
-        <View className="mt-4">
-          <Text className="text-2xl font-semibold text-center text-black/60">
-            Nova solicitação
-          </Text>
-        </View>
-        <View className="w-11/12 mx-auto rounded-lg p-4 mt-5 bg-black/10 ">
+        <View className="w-11/12 mx-auto rounded-lg p-4 bg-black/10 ">
           {(credentials.exitID ||
             credentials.collectorPhone ||
             credentials.desc) && (

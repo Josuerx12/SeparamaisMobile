@@ -11,7 +11,6 @@ import { api } from "../services/api";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 export type TSignInCredentials = {
   login: string;
@@ -65,7 +64,7 @@ export const AuthContextProvier = ({
       const loginCredentials = {
         login: credentials.login,
         password: credentials.password,
-        expoToken: {
+        expoTokens: {
           deviceId: Constants.deviceName,
           token: token.data,
         },

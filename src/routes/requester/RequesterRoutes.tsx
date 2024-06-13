@@ -4,13 +4,10 @@ import InSeparationScreen from "../../screens/requests/inSeparation";
 import NewRequestScreen from "../../screens/requests/new";
 import WaitingCollectRequestScreen from "../../screens/requests/waitingCollect";
 import CollectedScreen from "../../screens/requests/collected";
-import { getStatusBarHeight } from "react-native-status-bar-height";
 
 const Tab = createMaterialTopTabNavigator();
 
 const RequesterRoutes = () => {
-  const statusBarHeight = getStatusBarHeight();
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -21,7 +18,6 @@ const RequesterRoutes = () => {
           textTransform: "capitalize",
         },
       }}
-      style={{ marginTop: statusBarHeight }}
     >
       <Tab.Screen
         name="new"

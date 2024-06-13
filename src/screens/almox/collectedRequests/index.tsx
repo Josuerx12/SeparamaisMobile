@@ -5,15 +5,17 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useRequests } from "../../../hooks/useRequests";
 import { reqStatus } from "../../../constants/requestsStatus";
 import RequestCard from "../../../components/cards/requestCard";
 import { useFocusEffect } from "@react-navigation/native";
+import { useFetchWithFiltersUseInfiniteQuery } from "../../../hooks/useFetchWithFiltersUseInfiniteQuery";
+import { useFilterRequests } from "../../../contexts/FilterContext";
 
 const CollectedRequests = () => {
-  const { fetchRequestsWithFilters } = useRequests();
+  const { filters } = useFilterRequests();
 
   const {
     data,
@@ -22,30 +24,7 @@ const CollectedRequests = () => {
     refetch,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(
-    ["collectedRequests"],
-    async ({ pageParam = 1 }) => {
-      const res = await fetchRequestsWithFilters({
-        page: pageParam,
-        itemsPerPage: 10,
-        status: reqStatus.coletado,
-      });
-
-      return {
-        requests: res.requests,
-        nextPage: pageParam + 1,
-        totalPages: res.totalPages,
-      };
-    },
-    {
-      getNextPageParam: (lastPage, pages) => {
-        if (lastPage.nextPage <= lastPage.totalPages) {
-          return lastPage.nextPage;
-        }
-        return undefined;
-      },
-    }
-  );
+  } = useFetchWithFiltersUseInfiniteQuery(filters, reqStatus.coletado);
 
   const query = useQueryClient();
 
@@ -55,11 +34,12 @@ const CollectedRequests = () => {
     }, [query])
   );
 
+  useEffect(() => {
+    refetch();
+  }, [filters]);
+
   return (
     <View className="w-full flex-col mx-auto">
-      {isFetching && (
-        <ActivityIndicator className="py-5" color={"#999"} size={"large"} />
-      )}
       {data && data.pages.length > 0 ? (
         <FlatList
           className="py-5"

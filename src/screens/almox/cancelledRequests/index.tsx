@@ -5,15 +5,16 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import React, { useCallback } from "react";
-import { useInfiniteQuery, useQueryClient } from "react-query";
-import { useRequests } from "../../../hooks/useRequests";
-import { reqStatus } from "../../../constants/requestsStatus";
+import React, { useCallback, useEffect } from "react";
+import { useQueryClient } from "react-query";
 import RequestCard from "../../../components/cards/requestCard";
 import { useFocusEffect } from "@react-navigation/native";
+import { useFilterRequests } from "../../../contexts/FilterContext";
+import { useFetchWithFiltersUseInfiniteQuery } from "../../../hooks/useFetchWithFiltersUseInfiniteQuery";
+import { reqStatus } from "../../../constants/requestsStatus";
 
 const CancelledRequests = () => {
-  const { fetchRequestsWithFilters } = useRequests();
+  const { filters } = useFilterRequests();
 
   const {
     data,
@@ -22,30 +23,7 @@ const CancelledRequests = () => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } = useInfiniteQuery(
-    ["cancelledRequestsAlmox"],
-    async ({ pageParam = 1 }) => {
-      const res = await fetchRequestsWithFilters({
-        itemsPerPage: 10,
-        page: pageParam,
-        status: reqStatus.cancelada,
-      });
-
-      return {
-        totalPages: res.totalPages,
-        nextPage: pageParam + 1,
-        requests: res.requests,
-      };
-    },
-    {
-      getNextPageParam: (infos, page) => {
-        if (infos.nextPage <= infos.totalPages) {
-          return infos.nextPage;
-        }
-        return undefined;
-      },
-    }
-  );
+  } = useFetchWithFiltersUseInfiniteQuery(filters, reqStatus.cancelada);
 
   const query = useQueryClient();
 
@@ -55,11 +33,12 @@ const CancelledRequests = () => {
     }, [query])
   );
 
+  useEffect(() => {
+    refetch();
+  }, [filters]);
+
   return (
     <View className="w-full flex-col mx-auto">
-      {isFetching && (
-        <ActivityIndicator className="py-5" color={"#999"} size={"large"} />
-      )}
       {data && data.pages.flatMap(({ requests }) => requests).length > 0 ? (
         <FlatList
           className="py-5"
