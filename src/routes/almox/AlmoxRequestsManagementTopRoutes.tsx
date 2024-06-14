@@ -1,5 +1,4 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import AlmoxScreen from "../../screens/almox";
 import NewRequests from "../../screens/almox/newRequests";
 import WaitingToCancelRequests from "../../screens/almox/waitingToCancelRequests";
 import InSeparationRequests from "../../screens/almox/inSeparationRequests";
@@ -19,9 +18,28 @@ const AlmoxRequestsManagementTopRoutes = () => {
     "waitingToCancelReqAlmox",
     async () =>
       await fetchRequestsWithFilters({
-        itemsPerPage: 20,
+        itemsPerPage: 1,
         page: 1,
         status: reqStatus.aguardandoCancelamento,
+      })
+  );
+  const { data: waitingCollect } = useQuery(
+    "waitingToCollectAlmox",
+    async () =>
+      await fetchRequestsWithFilters({
+        itemsPerPage: 1,
+        page: 1,
+        status: reqStatus.aguardandoColeta,
+      })
+  );
+
+  const { data: inSeparationAlmox } = useQuery(
+    "inSeparationAlmox",
+    async () =>
+      await fetchRequestsWithFilters({
+        itemsPerPage: 1,
+        page: 1,
+        status: reqStatus.aguardandoColeta,
       })
   );
 
@@ -42,7 +60,7 @@ const AlmoxRequestsManagementTopRoutes = () => {
         component={NewRequests}
       />
 
-      {waitingToCancel && (
+      {waitingToCancel && waitingToCancel?.requests.length > 0 && (
         <Top.Screen
           name="waitingToCancelRequestsAlmox"
           options={{ title: "Aguardando Cancelamento" }}
@@ -50,17 +68,21 @@ const AlmoxRequestsManagementTopRoutes = () => {
         />
       )}
 
-      <Top.Screen
-        name="inSeparationRequests"
-        options={{ title: "Em Separação" }}
-        component={InSeparationRequests}
-      />
+      {inSeparationAlmox && inSeparationAlmox.requests.length > 0 && (
+        <Top.Screen
+          name="inSeparationRequests"
+          options={{ title: "Em Separação" }}
+          component={InSeparationRequests}
+        />
+      )}
 
-      <Top.Screen
-        name="waitingForCollectRequests"
-        options={{ title: "Aguardando Coleta" }}
-        component={WaitingForCollect}
-      />
+      {waitingCollect && waitingCollect.requests.length > 0 && (
+        <Top.Screen
+          name="waitingForCollectRequests"
+          options={{ title: "Aguardando Coleta" }}
+          component={WaitingForCollect}
+        />
+      )}
 
       <Top.Screen
         name="collectedRequestsAlmox"

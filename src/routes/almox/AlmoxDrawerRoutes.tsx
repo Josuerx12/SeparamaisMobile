@@ -14,7 +14,7 @@ const AlmoxDrawerRoutes = () => {
         name="solicitacoes"
         options={{
           drawerLabel: "Processos de Separação",
-          title: "Processos de Separação",
+          title: "Separação",
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigator.navigate("filterRequests")}
@@ -30,7 +30,7 @@ const AlmoxDrawerRoutes = () => {
         name="compras"
         options={{
           drawerLabel: "Processos de Compra",
-          title: "Processos de Compra",
+          title: "Compras",
         }}
         component={AlmoxBillingsManagementTopRoutes}
       />
