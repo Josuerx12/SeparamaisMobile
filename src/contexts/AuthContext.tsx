@@ -59,11 +59,7 @@ export const AuthContextProvier = ({
 
   async function signIn(credentials: TSignInCredentials) {
     try {
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId:
-          Constants?.expoConfig?.extra?.eas?.projectId ??
-          Constants?.easConfig?.projectId,
-      });
+      const token = await Notifications.getExpoPushTokenAsync();
 
       const loginCredentials = {
         login: credentials.login,
