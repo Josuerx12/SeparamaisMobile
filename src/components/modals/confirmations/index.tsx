@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { ReactNode } from "react";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type Props = {
   title: string;
@@ -32,15 +33,16 @@ const ModalConfirmations = ({
             <FontAwesome size={24} name="times" color={"rgb(23 23 23)"} />
           </TouchableOpacity>
         </View>
+        <KeyboardAwareScrollView>
+          <View>
+            <View className="mx-auto my-6">
+              <Octicons name="verified" size={200} color={"#33d302"} />
+            </View>
+            <Text className="text-justify">{message}</Text>
 
-        <View>
-          <View className="mx-auto my-6">
-            <Octicons name="verified" size={200} color={"#33d302"} />
+            {children}
           </View>
-          <Text className="text-justify">{message}</Text>
-
-          {children}
-        </View>
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );

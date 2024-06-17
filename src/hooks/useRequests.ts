@@ -112,6 +112,36 @@ export const useRequests = () => {
     }
   }
 
+  async function startSeparation(id: string) {
+    try {
+      await api.put(`/requests/inSeparation/${id}`);
+    } catch (error: any) {
+      throw error.message;
+    }
+  }
+
+  async function awaitingCollection(id: string) {
+    try {
+      await api.put(`/requests/separated/${id}`);
+    } catch (error: any) {
+      throw error.message;
+    }
+  }
+
+  async function collected({
+    id,
+    collectorCredentials,
+  }: {
+    id: string;
+    collectorCredentials: { name: string; document: string };
+  }) {
+    try {
+      await api.post(`/requests/collected/${id}`, collectorCredentials);
+    } catch (error: any) {
+      throw error.response.data.errors;
+    }
+  }
+
   return {
     fetchUserRequests,
     fetchAllRequests,
@@ -120,5 +150,8 @@ export const useRequests = () => {
     cancelReq,
     deleteReq,
     fetchRequestsWithFilters,
+    startSeparation,
+    awaitingCollection,
+    collected,
   };
 };

@@ -5,44 +5,10 @@ import InSeparationRequests from "../../screens/almox/inSeparationRequests";
 import WaitingForCollect from "../../screens/almox/waitingForCollect";
 import CollectedRequests from "../../screens/almox/collectedRequests";
 import CancelledRequests from "../../screens/almox/cancelledRequests";
-import { useQuery } from "react-query";
-import { useRequests } from "../../hooks/useRequests";
-import { reqStatus } from "../../constants/requestsStatus";
 
 const Top = createMaterialTopTabNavigator();
 
 const AlmoxRequestsManagementTopRoutes = () => {
-  const { fetchRequestsWithFilters } = useRequests();
-
-  const { data: waitingToCancel } = useQuery(
-    "waitingToCancelReqAlmox",
-    async () =>
-      await fetchRequestsWithFilters({
-        itemsPerPage: 1,
-        page: 1,
-        status: reqStatus.aguardandoCancelamento,
-      })
-  );
-  const { data: waitingCollect } = useQuery(
-    "waitingToCollectAlmox",
-    async () =>
-      await fetchRequestsWithFilters({
-        itemsPerPage: 1,
-        page: 1,
-        status: reqStatus.aguardandoColeta,
-      })
-  );
-
-  const { data: inSeparationAlmox } = useQuery(
-    "inSeparationAlmox",
-    async () =>
-      await fetchRequestsWithFilters({
-        itemsPerPage: 1,
-        page: 1,
-        status: reqStatus.aguardandoColeta,
-      })
-  );
-
   return (
     <Top.Navigator
       screenOptions={{
@@ -60,29 +26,23 @@ const AlmoxRequestsManagementTopRoutes = () => {
         component={NewRequests}
       />
 
-      {waitingToCancel && waitingToCancel?.requests.length > 0 && (
-        <Top.Screen
-          name="waitingToCancelRequestsAlmox"
-          options={{ title: "Aguardando Cancelamento" }}
-          component={WaitingToCancelRequests}
-        />
-      )}
+      <Top.Screen
+        name="waitingToCancelRequestsAlmox"
+        options={{ title: "Aguardando Cancelamento" }}
+        component={WaitingToCancelRequests}
+      />
 
-      {inSeparationAlmox && inSeparationAlmox.requests.length > 0 && (
-        <Top.Screen
-          name="inSeparationRequests"
-          options={{ title: "Em Separação" }}
-          component={InSeparationRequests}
-        />
-      )}
+      <Top.Screen
+        name="inSeparationRequests"
+        options={{ title: "Em Separação" }}
+        component={InSeparationRequests}
+      />
 
-      {waitingCollect && waitingCollect.requests.length > 0 && (
-        <Top.Screen
-          name="waitingForCollectRequests"
-          options={{ title: "Aguardando Coleta" }}
-          component={WaitingForCollect}
-        />
-      )}
+      <Top.Screen
+        name="waitingForCollectRequests"
+        options={{ title: "Aguardando Coleta" }}
+        component={WaitingForCollect}
+      />
 
       <Top.Screen
         name="collectedRequestsAlmox"

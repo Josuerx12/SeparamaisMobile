@@ -13,7 +13,6 @@ import { useRequests } from "../../../../../hooks/useRequests";
 import { useToast } from "react-native-toast-notifications";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { reqStatus } from "../../../../../constants/requestsStatus";
-import { useNavigation } from "@react-navigation/native";
 
 type Props = {
   isOpen: boolean;
@@ -21,37 +20,66 @@ type Props = {
   request: IRequest;
 };
 
-const CancelSeparationModal = ({ isOpen, handleClose, request }: Props) => {
+const RequestCancelSeparationModal = ({
+  isOpen,
+  handleClose,
+  request,
+}: Props) => {
   const query = useQueryClient();
-  const { navigate } = useNavigation();
+  const [reason, setReason] = useState("");
+
   const toast = useToast();
 
-  const { cancelReq } = useRequests();
+  const { requestCancelReq } = useRequests();
 
-  const { mutateAsync, isLoading } = useMutation(["cancelRequest"], cancelReq, {
-    onError: (e: any) => {
-      toast.show("Error: " + e.reason.msg, {
-        type: "danger",
-      });
-    },
-    onSuccess: () =>
-      Promise.all([
-        toast.show("Sucesso ao solicitar o cancelamento da sua solicitação!", {
-          type: "success",
-        }),
-        query.invalidateQueries("almoxRequests" + reqStatus.cancelada.trim()),
-        handleClose(),
-        navigate("cancelledRequestsAlmox"),
-      ]),
-  });
+  const { mutateAsync, isLoading } = useMutation(
+    ["requestCancelRequest"],
+    requestCancelReq,
+    {
+      onError: (e: any) => {
+        toast.show("Error: " + e.reason.msg, {
+          type: "danger",
+        });
+      },
+      onSuccess: () =>
+        Promise.all([
+          toast.show(
+            "Sucesso ao solicitar o cancelamento da sua solicitação!",
+            {
+              type: "success",
+            }
+          ),
+          query.invalidateQueries("userRequests"),
+
+          query.invalidateQueries(
+            ("almoxRequests" + reqStatus.aguardandoCancelamento).trim()
+          ),
+          handleClose(),
+        ]),
+    }
+  );
 
   return (
     <ModalConfirmations
-      title="Cancelar Separação"
-      message={`Confirmar o cancelamento da separação da ID de saída nº: ${request.exitID}?`}
+      title="Solicitar Cancelamento de Separação"
+      message={`Confirmar solicitação de cancelamento da separação da ID de saída nº: ${request.exitID}?`}
       isOpen={isOpen}
       handleClose={handleClose}
     >
+      <View>
+        <Text className="text-lg font-bold text-center">
+          Motivo do Cancelamento
+        </Text>
+        <TextInput
+          onChangeText={(text) => setReason(text)}
+          multiline
+          placeholder="Digite o motivo do cancelamento aqui!"
+          textAlignVertical="top"
+          placeholderTextColor={"#333"}
+          className="bg-white h-24 p-2 text-[#333] rounded-md mt-2"
+        />
+      </View>
+
       <View className="w-full flex-row">
         <TouchableOpacity
           disabled={isLoading}
@@ -62,7 +90,7 @@ const CancelSeparationModal = ({ isOpen, handleClose, request }: Props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={async () => await mutateAsync(request._id)}
+          onPress={async () => await mutateAsync({ id: request._id, reason })}
           disabled={isLoading}
           className="basis-[45%] flex-grow p-1 bg-green-500 mt-5 rounded"
         >
@@ -82,4 +110,4 @@ const CancelSeparationModal = ({ isOpen, handleClose, request }: Props) => {
   );
 };
 
-export default CancelSeparationModal;
+export default RequestCancelSeparationModal;

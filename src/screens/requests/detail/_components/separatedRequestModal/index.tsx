@@ -14,26 +14,28 @@ type Props = {
   request: IRequest;
 };
 
-const StartSeparationModal = ({ isOpen, handleClose, request }: Props) => {
-  const { startSeparation } = useRequests();
+const SeparatedRequestModal = ({ isOpen, handleClose, request }: Props) => {
+  const { awaitingCollection } = useRequests();
   const { navigate } = useNavigation();
   const toast = useToast();
   const query = useQueryClient();
 
   const { mutateAsync, isLoading } = useMutation(
-    ["startSeparation"],
-    startSeparation,
+    ["separatedRequest"],
+    awaitingCollection,
     {
       onSuccess: () => {
         Promise.all([
-          toast.show("Separação iniciada com sucesso!", { type: "success" }),
+          toast.show("Separação finzalizada com sucesso!", { type: "success" }),
           query.invalidateQueries("userRequests"),
-          query.invalidateQueries(("almoxRequests" + reqStatus.nova).trim()),
+          query.invalidateQueries(
+            "almoxRequests" + reqStatus.aguardandoColeta.trim()
+          ),
           query.invalidateQueries(
             ("almoxRequests" + reqStatus.emSeparacao).trim()
           ),
           handleClose(),
-          navigate("inSeparationRequests"),
+          navigate("waitingForCollectRequests"),
         ]);
       },
       onError: (e) => {
@@ -44,8 +46,8 @@ const StartSeparationModal = ({ isOpen, handleClose, request }: Props) => {
 
   return (
     <ModalConfirmations
-      title="Inicio Separação"
-      message={`Confirmar inicio da separação de materiais da ID de saída nº: ${request.exitID}?`}
+      title="Finalizar Separação"
+      message={`Confirmar finalização da separação de materiais da ID de saída nº: ${request.exitID}?`}
       isOpen={isOpen}
       handleClose={handleClose}
     >
@@ -79,4 +81,4 @@ const StartSeparationModal = ({ isOpen, handleClose, request }: Props) => {
   );
 };
 
-export default StartSeparationModal;
+export default SeparatedRequestModal;

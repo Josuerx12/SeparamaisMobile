@@ -17,6 +17,9 @@ export declare global {
       cancelledRequestsAlmox;
       almox;
       userRequests;
+      inSeparationRequests;
+      waitingForCollectRequests;
+      collectedRequestsAlmox;
     }
   }
 }

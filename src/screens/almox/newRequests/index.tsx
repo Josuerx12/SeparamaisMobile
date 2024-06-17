@@ -29,8 +29,8 @@ const NewRequests = () => {
   const query = useQueryClient();
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries(("almoxRequests" + reqStatus.nova).trim());
-    }, [query])
+      query.invalidateQueries("almoxRequests" + reqStatus.nova.trim());
+    }, [])
   );
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const NewRequests = () => {
       {data && data.pages.flatMap(({ requests }) => requests).length > 0 ? (
         <FlatList
           className="py-5"
-          data={data.pages.flatMap(({ requests }) => requests)}
+          data={data?.pages.flatMap(({ requests }) => requests)}
           renderItem={({ item }) => <RequestCard req={item} key={item._id} />}
           keyExtractor={(item) => item._id}
           onEndReached={() => {
