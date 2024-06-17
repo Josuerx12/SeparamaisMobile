@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import ModalConfirmations from "../../../../../components/modals/confirmations";
+import { IRequest } from "../../../../../interfaces/Request";
 
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
+  request: IRequest;
 };
 
-const StartSeparationModal = ({ isOpen, handleClose }: Props) => {
+const StartSeparationModal = ({ isOpen, handleClose, request }: Props) => {
   return (
     <ModalConfirmations
       title="Inicio Separação"

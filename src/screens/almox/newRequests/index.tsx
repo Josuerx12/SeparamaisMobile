@@ -29,7 +29,7 @@ const NewRequests = () => {
   const query = useQueryClient();
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("newRequestsAlmox");
+      query.invalidateQueries(("almoxRequests" + reqStatus.nova).trim());
     }, [query])
   );
 

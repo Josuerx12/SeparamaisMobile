@@ -2,8 +2,10 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   FontAwesome5,
+  EvilIcons,
   Ionicons,
   MaterialCommunityIcons,
+  FontAwesome,
 } from "@expo/vector-icons";
 import { useAuth } from "../contexts/AuthContext";
 import SettingsScreen from "../screens/settings";
@@ -20,7 +22,6 @@ const AuthorizedTabRoutes = () => {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#ddd",
         tabBarHideOnKeyboard: true,
@@ -35,6 +36,7 @@ const AuthorizedTabRoutes = () => {
         component={RequesterDrawerRoutes}
         options={{
           tabBarLabel: "Solicitações",
+          title: "",
           tabBarIcon: ({ color, size, focused }) => {
             return (
               <MaterialCommunityIcons
@@ -111,13 +113,11 @@ const AuthorizedTabRoutes = () => {
           tabBarLabel: "Configurações",
           headerTitleAlign: "center",
           tabBarIcon: ({ color, size, focused }) => {
-            return (
-              <FontAwesome5
-                name={!focused ? "user" : "user-alt"}
-                size={size}
-                color={color}
-              />
-            );
+            if (focused) {
+              return <FontAwesome name="gear" size={size} color={color} />;
+            } else {
+              return <EvilIcons name="gear" size={size} color={color} />;
+            }
           },
         }}
       />

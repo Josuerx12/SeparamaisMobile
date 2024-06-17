@@ -16,6 +16,7 @@ export declare global {
       filterBillings;
       cancelledRequestsAlmox;
       almox;
+      userRequests;
     }
   }
 }

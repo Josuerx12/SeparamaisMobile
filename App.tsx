@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Platform } from "react-native";
 import "react-native-gesture-handler";
 import { FilterContextProvider } from "./src/contexts/FilterContext";
+import { ToastProvider } from "react-native-toast-notifications";
 
 export default function App() {
   const client = new QueryClient();
@@ -19,7 +20,16 @@ export default function App() {
             networkActivityIndicatorVisible
             translucent
           />
-          <Router />
+          <ToastProvider
+            style={{
+              marginTop: 30,
+            }}
+            dangerColor="#ff0000"
+            successColor="#09ff00"
+            placement="top"
+          >
+            <Router />
+          </ToastProvider>
         </QueryClientProvider>
       </FilterContextProvider>
     </AuthContextProvier>

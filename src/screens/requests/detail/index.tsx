@@ -6,6 +6,7 @@ import ModalConfirmations from "../../../components/modals/confirmations";
 import { reqStatus } from "../../../constants/requestsStatus";
 import { useAuth } from "../../../contexts/AuthContext";
 import StartSeparationModal from "./_components/startSeparationModal";
+import CancelSeparationModal from "./_components/cancelSeparationModal";
 
 type RouteParams = {
   request: IRequest;
@@ -16,14 +17,22 @@ const RequestDetails = () => {
   const { user } = useAuth();
 
   const [isOpenSeparateModal, setIsOpenSeparateModal] = useState(false);
+  const [isOpenCancelSeparateModal, setIsOpenCancelSeparateModal] =
+    useState(false);
 
   const { request } = params as RouteParams;
 
   return (
     <>
       <StartSeparationModal
+        request={request}
         isOpen={isOpenSeparateModal}
         handleClose={() => setIsOpenSeparateModal((prev) => !prev)}
+      />
+      <CancelSeparationModal
+        isOpen={isOpenCancelSeparateModal}
+        handleClose={() => setIsOpenCancelSeparateModal((prev) => !prev)}
+        request={request}
       />
       <View className="p-2">
         <Text className="text-center mb-3 mt-1 font-bold text-neutral-700 text-lg">
@@ -181,16 +190,38 @@ const RequestDetails = () => {
           </View>
         )}
 
-        {request.status === reqStatus.nova && user?.almox && (
-          <TouchableOpacity
-            onPress={() => setIsOpenSeparateModal((prev) => !prev)}
-            className="p-1 bg-blue-500 mt-5 rounded w-full  mx-auto"
-          >
-            <Text className="text-white text-center text-lg">
-              Iniciar Separação
-            </Text>
-          </TouchableOpacity>
-        )}
+        <View className="flex gap-y-2 mt-3">
+          {((user?._id === request.requestedBy.id &&
+            request.status === "Aguardando Separação") ||
+            (user?.almox &&
+              request.status !== "Solicitação Cancelada" &&
+              request.status !== "Aguardando Cancelamento" &&
+              request.status !== "Coletado") ||
+            (user?.admin &&
+              request.status !== "Solicitação Cancelada" &&
+              request.status !== "Aguardando Cancelamento" &&
+              request.status !== "Coletado")) && (
+            <TouchableOpacity
+              onPress={() => setIsOpenCancelSeparateModal((prev) => !prev)}
+              className="p-1 bg-red-500 items-center justify-center rounded w-full"
+            >
+              <Text className="text-white text-center text-lg">
+                Solicitar Cancelamento
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {request.status === reqStatus.nova && user?.almox && (
+            <TouchableOpacity
+              onPress={() => setIsOpenSeparateModal((prev) => !prev)}
+              className="p-1 bg-blue-500  items-center justify-center  rounded w-full"
+            >
+              <Text className="text-white text-center text-lg">
+                Iniciar Separação
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </>
   );

@@ -19,10 +19,16 @@ export const FilterContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const actualDate = new Date();
+
+  const startAtDate = new Date(
+    `${actualDate.getFullYear()}-${actualDate.getMonth() + 1}-01T00:00:00-03:00`
+  );
+
   const [filters, setFilters] = useState<FilterRequestProps>({
     exitID: "",
-    startAt: "",
-    endAt: "",
+    startAt: startAtDate,
+    endAt: actualDate,
   });
 
   function filterRequests(filtersFromFilter: FilterRequestProps) {

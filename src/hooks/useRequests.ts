@@ -41,14 +41,22 @@ export const useRequests = () => {
     startAt?: string | Date;
     endAt?: string | Date;
   }): Promise<IPaginatedAndFilteredRequest> {
+    const params = new URLSearchParams();
+
+    params.append("itemsPerPage", String(itemsPerPage));
+    {
+      exitID && params.append("exitID", String(exitID));
+    }
+    params.append("page", String(page));
+    params.append("status", String(status));
+    {
+      startAt && params.append("startAt", new Date(startAt).toISOString());
+    }
+    {
+      endAt && params.append("endAt", new Date(endAt).toISOString());
+    }
     try {
-      const res = await api.get(
-        `/requests/paginatedReq?status=${status}&itemsPerPage=${itemsPerPage}&page=${page}${
-          exitID ? "&exitID=" + exitID : ""
-        }${endAt ? "&endAt=" + endAt : ""}${
-          startAt ? "&startAt" + startAt : ""
-        }`.trim()
-      );
+      const res = await api.get("/requests/paginatedReq", { params });
       return res.data.payload;
     } catch (error: any) {
       throw error.response.data;
@@ -81,7 +89,7 @@ export const useRequests = () => {
     reason: string;
   }) {
     try {
-      const res = await api.put(`/requests/requestCancel/${id}`, reason);
+      const res = await api.put(`/requests/requestCancel/${id}`, { reason });
       return res.data;
     } catch (error: any) {
       throw error.response.data.errors;

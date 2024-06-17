@@ -16,6 +16,8 @@ export function useFetchWithFiltersUseInfiniteQuery(
         itemsPerPage: 10,
         status: status,
         exitID: filters.exitID,
+        startAt: filters.startAt,
+        endAt: filters.endAt,
       });
 
       return {

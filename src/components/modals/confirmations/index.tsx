@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { ReactNode } from "react";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Octicons } from "@expo/vector-icons";
 
 type Props = {
   title: string;
@@ -23,9 +23,9 @@ const ModalConfirmations = ({
         isOpen ? "absolute inset-0" : "hidden"
       }`}
     >
-      <View className="w-11/12 h-fit p-2 mt-5 rounded-md mx-auto bg-neutral-300">
-        <View className="justify-between items-center flex-row border-b-2 border-neutral-100 pb-2">
-          <Text className="text-xl font-bold text-neutral-900 capitalize">
+      <View className="w-11/12 h-fit p-2 mt-5 rounded-md mx-auto bg-neutral-50">
+        <View className="justify-between items-center flex-row border-b-2 border-neutral-700 pb-2">
+          <Text className="text-lg font-bold text-neutral-800 capitalize">
             {title}
           </Text>
           <TouchableOpacity onPress={handleClose}>
@@ -34,8 +34,8 @@ const ModalConfirmations = ({
         </View>
 
         <View>
-          <View className="mx-auto">
-            <FontAwesome name="check-circle" size={200} color={"#21b128"} />
+          <View className="mx-auto my-6">
+            <Octicons name="verified" size={200} color={"#33d302"} />
           </View>
           <Text className="text-justify">{message}</Text>
 

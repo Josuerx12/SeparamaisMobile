@@ -13,8 +13,17 @@ import { useNavigation } from "@react-navigation/native";
 import { useFilterRequests } from "../../../contexts/FilterContext";
 
 const RequestsFilterModal = () => {
-  const [isVisible, setIsVisible] = useState(
+  const [isVisibleStartAt, setIsVisibleStartAt] = useState(
     Platform.OS === "ios" ? true : false
+  );
+  const [isVisibleEndAt, setIsVisibleEndAt] = useState(
+    Platform.OS === "ios" ? true : false
+  );
+
+  const actualDate = new Date();
+
+  const startAtDate = new Date(
+    `${actualDate.getFullYear()}-${actualDate.getMonth() + 1}-01T00:00:00-03:00`
   );
 
   const { filterRequests, filters: FilterControl } = useFilterRequests();
@@ -25,13 +34,13 @@ const RequestsFilterModal = () => {
 
   function cleanFilters() {
     setFilters({
-      endAt: "",
-      startAt: "",
+      endAt: actualDate,
+      startAt: startAtDate,
       exitID: "",
     });
     filterRequests({
-      endAt: "",
-      startAt: "",
+      endAt: actualDate,
+      startAt: startAtDate,
       exitID: "",
     });
     navigator.goBack();
@@ -41,8 +50,8 @@ const RequestsFilterModal = () => {
     <KeyboardAwareScrollView className="flex flex-col">
       <View className="p-4">
         <View>
-          {(filters.endAt.toString.length > 0 ||
-            filters.startAt.toString.length > 0 ||
+          {(filters.endAt != actualDate ||
+            filters.startAt != startAtDate ||
             filters.exitID.length > 0) && (
             <TouchableOpacity
               onPress={cleanFilters}
@@ -72,18 +81,29 @@ const RequestsFilterModal = () => {
               Data de início
             </Text>
             {Platform.OS === "android" && (
-              <TouchableOpacity
-                className="w-full"
-                onPress={() => setIsVisible((prev) => !prev)}
-              >
-                <View className=" bg-neutral-600 w-full rounded-sm shadow mt-4 mx-auto p-2 ">
-                  <Text className="text-center text-white">
-                    Selecionar Data de Inicio
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <View className="flex-col  w-full gap-y-2">
+                <TouchableOpacity
+                  className="w-full"
+                  onPress={() => setIsVisibleStartAt((prev) => !prev)}
+                >
+                  <View className=" bg-neutral-600 w-full rounded-sm shadow mt-4 mx-auto p-2 ">
+                    <Text className="text-center text-white">
+                      Selecionar Data de Inicio
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TextInput
+                  value={new Date(filters.startAt).toLocaleDateString("pt-BR")}
+                  autoCorrect={false}
+                  editable={false}
+                  autoCapitalize="none"
+                  placeholderTextColor="#fff"
+                  className="bg-neutral-400 rounded-sm text-center text-white px-4 h-[40px]"
+                  placeholder="Insira a id de saída que deseja filtrar!"
+                />
+              </View>
             )}
-            {isVisible && (
+            {isVisibleStartAt && (
               <View className="mx-auto mt-4">
                 <DatePicker
                   testID="dateTimePicker"
@@ -91,7 +111,7 @@ const RequestsFilterModal = () => {
                   is24Hour
                   display="default"
                   onChange={(e, selectedDate?: Date) => {
-                    setIsVisible(Platform.OS === "ios");
+                    setIsVisibleStartAt(Platform.OS === "ios");
                     if (selectedDate) {
                       setFilters((prev) => ({
                         ...prev,
@@ -99,7 +119,7 @@ const RequestsFilterModal = () => {
                       }));
                     }
                   }}
-                  value={new Date()}
+                  value={new Date(filters.startAt)}
                 />
               </View>
             )}
@@ -110,18 +130,29 @@ const RequestsFilterModal = () => {
               Data de Fim
             </Text>
             {Platform.OS === "android" && (
-              <TouchableOpacity
-                className="w-full"
-                onPress={() => setIsVisible((prev) => !prev)}
-              >
-                <View className=" bg-neutral-600 w-full rounded-sm shadow mt-4 mx-auto p-2 ">
-                  <Text className="text-center text-white">
-                    Selecionar Data de Fim
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <View className="flex-col  w-full gap-y-2">
+                <TouchableOpacity
+                  className="w-full"
+                  onPress={() => setIsVisibleEndAt((prev) => !prev)}
+                >
+                  <View className=" bg-neutral-600 w-full rounded-sm shadow mt-4 mx-auto p-2 ">
+                    <Text className="text-center text-white">
+                      Selecionar Data de Fim
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TextInput
+                  value={new Date(filters.endAt).toLocaleDateString("pt-BR")}
+                  autoCorrect={false}
+                  editable={false}
+                  autoCapitalize="none"
+                  placeholderTextColor="#fff"
+                  className="bg-neutral-400 rounded-sm text-center text-white px-4 h-[40px]"
+                  placeholder="Insira a id de saída que deseja filtrar!"
+                />
+              </View>
             )}
-            {isVisible && (
+            {isVisibleEndAt && (
               <View className="mx-auto mt-4">
                 <DatePicker
                   testID="dateTimePicker"
@@ -129,7 +160,7 @@ const RequestsFilterModal = () => {
                   is24Hour
                   display="default"
                   onChange={(e, selectedDate?: Date) => {
-                    setIsVisible(Platform.OS === "ios");
+                    setIsVisibleEndAt(Platform.OS === "ios");
                     if (selectedDate) {
                       setFilters((prev) => ({
                         ...prev,
@@ -137,7 +168,7 @@ const RequestsFilterModal = () => {
                       }));
                     }
                   }}
-                  value={new Date()}
+                  value={new Date(filters.endAt)}
                 />
               </View>
             )}

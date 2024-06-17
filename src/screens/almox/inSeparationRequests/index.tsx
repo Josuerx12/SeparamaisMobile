@@ -31,7 +31,7 @@ const InSeparationRequests = () => {
 
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("inSeparationRequestsAlmox");
+      query.invalidateQueries(("almoxRequests" + reqStatus.emSeparacao).trim());
     }, [query])
   );
 

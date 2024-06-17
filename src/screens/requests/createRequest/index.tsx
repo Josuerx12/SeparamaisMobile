@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TNewReqCredentials } from "../../../interfaces/Request";
 import { useMutation, useQueryClient } from "react-query";
 import { useRequests } from "../../../hooks/useRequests";
+import { reqStatus } from "../../../constants/requestsStatus";
 
 type MutationError = {
   exitID: { msg: string };
@@ -33,7 +34,7 @@ const CreateRequestScreen = () => {
     desc: "",
   });
 
-  const { navigate } = useNavigation();
+  const navigator = useNavigation();
 
   const query = useQueryClient();
   const { newReq } = useRequests();
@@ -46,8 +47,9 @@ const CreateRequestScreen = () => {
     onSuccess: () =>
       Promise.all([
         query.invalidateQueries("userRequests"),
+        query.invalidateQueries(("almoxRequests" + reqStatus.nova).trim()),
         cleanTypedCredentials(),
-        navigate("requests"),
+        navigator.navigate("userRequests"),
       ]),
   });
 

@@ -29,7 +29,7 @@ const CancelledRequests = () => {
 
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("cancelledRequestsAlmox");
+      query.invalidateQueries(("almoxRequests" + reqStatus.cancelada).trim());
     }, [query])
   );
 

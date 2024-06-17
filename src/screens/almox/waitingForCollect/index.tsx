@@ -29,7 +29,9 @@ const WaitingForCollect = () => {
   const query = useQueryClient();
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("waitingForCollectAlmox");
+      query.invalidateQueries(
+        ("almoxRequests" + reqStatus.aguardandoColeta).trim()
+      );
     }, [query])
   );
 

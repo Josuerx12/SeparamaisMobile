@@ -32,7 +32,9 @@ const WaitingToCancelRequests = () => {
   const query = useQueryClient();
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("waitingToCancelRequestsAlmox");
+      query.invalidateQueries(
+        ("almoxRequests" + reqStatus.aguardandoCancelamento).trim()
+      );
     }, [query])
   );
 

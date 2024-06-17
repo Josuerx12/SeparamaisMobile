@@ -30,7 +30,7 @@ const CollectedRequests = () => {
 
   useFocusEffect(
     useCallback(() => {
-      query.invalidateQueries("collectedRequests");
+      query.invalidateQueries(("almoxRequests" + reqStatus.coletado).trim());
     }, [query])
   );
 
