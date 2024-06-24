@@ -36,7 +36,6 @@ const NewRequests = () => {
     refetch();
   }, [filters]);
 
-  console.log(data?.pages.flatMap((req) => req.requests));
   return (
     <View className="w-full flex-col mx-auto">
       {data && data.pages.flatMap(({ requests }) => requests).length > 0 ? (
