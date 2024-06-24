@@ -20,6 +20,7 @@ export declare global {
       inSeparationRequests;
       waitingForCollectRequests;
       collectedRequestsAlmox;
+      new;
     }
   }
 }

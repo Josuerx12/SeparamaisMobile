@@ -6,8 +6,7 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useCallback, useEffect } from "react";
-import { useInfiniteQuery, useQueryClient } from "react-query";
-import { useRequests } from "../../../hooks/useRequests";
+import { useQueryClient } from "react-query";
 import { reqStatus } from "../../../constants/requestsStatus";
 import RequestCard from "../../../components/cards/requestCard";
 import { useFocusEffect } from "@react-navigation/native";
@@ -37,6 +36,7 @@ const NewRequests = () => {
     refetch();
   }, [filters]);
 
+  console.log(data?.pages.flatMap((req) => req.requests));
   return (
     <View className="w-full flex-col mx-auto">
       {data && data.pages.flatMap(({ requests }) => requests).length > 0 ? (

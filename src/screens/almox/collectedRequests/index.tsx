@@ -43,7 +43,7 @@ const CollectedRequests = () => {
       {data && data.pages.length > 0 ? (
         <FlatList
           className="py-5"
-          data={data.pages.flatMap((e) => e.requests)}
+          data={data?.pages.flatMap((e) => e.requests)}
           renderItem={({ item }) => <RequestCard req={item} key={item._id} />}
           keyExtractor={(item) => item._id}
           onEndReached={() => {

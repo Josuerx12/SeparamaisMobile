@@ -25,6 +25,11 @@ const RequestsFilterModal = () => {
   const startAtDate = new Date(
     `${actualDate.getFullYear()}-${actualDate.getMonth() + 1}-01T00:00:00-03:00`
   );
+  const actualDateAtEndOfTheDay = new Date(
+    `${actualDate.getFullYear()}-${
+      actualDate.getMonth() + 1
+    }-${actualDate.getDate()}T23:00:00-03:00`
+  );
 
   const { filterRequests, filters: FilterControl } = useFilterRequests();
 
@@ -34,12 +39,12 @@ const RequestsFilterModal = () => {
 
   function cleanFilters() {
     setFilters({
-      endAt: actualDate,
+      endAt: actualDateAtEndOfTheDay,
       startAt: startAtDate,
       exitID: "",
     });
     filterRequests({
-      endAt: actualDate,
+      endAt: actualDateAtEndOfTheDay,
       startAt: startAtDate,
       exitID: "",
     });

@@ -25,10 +25,16 @@ export const FilterContextProvider = ({
     `${actualDate.getFullYear()}-${actualDate.getMonth() + 1}-01T00:00:00-03:00`
   );
 
+  const actualDateAtEndOfTheDay = new Date(
+    `${actualDate.getFullYear()}-${
+      actualDate.getMonth() + 1
+    }-${actualDate.getDate()}T23:00:00-03:00`
+  );
+
   const [filters, setFilters] = useState<FilterRequestProps>({
     exitID: "",
     startAt: startAtDate,
-    endAt: actualDate,
+    endAt: actualDateAtEndOfTheDay,
   });
 
   function filterRequests(filtersFromFilter: FilterRequestProps) {

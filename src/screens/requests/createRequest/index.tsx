@@ -46,10 +46,10 @@ const CreateRequestScreen = () => {
   >(["createNewRequest"], newReq, {
     onSuccess: () =>
       Promise.all([
-        query.invalidateQueries("userRequests"),
-        query.invalidateQueries(("almoxRequests" + reqStatus.nova).trim()),
+        query.resetQueries("userRequests"),
+        query.resetQueries("almoxRequests" + reqStatus.nova.trim()),
         cleanTypedCredentials(),
-        navigator.navigate("userRequests"),
+        navigator.navigate("new"),
       ]),
   });
 
